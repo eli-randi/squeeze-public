@@ -1,8 +1,12 @@
 import React from "react";
 import cookie from 'react-cookies';
 
+
+const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3000': 'https://api.thisissqueeze.com'
+
+
 export function APILogin (username, password) {
-    const response = fetch('http://localhost:3000/connectors/login', {
+    const response = fetch(API_HOST + '/connectors/login', {
         method: 'POST', 
         mode: 'cors', 
         cache: 'no-cache', 
@@ -14,10 +18,11 @@ export function APILogin (username, password) {
         redirect: 'follow', 
         referrerPolicy: 'no-referrer', 
         body: JSON.stringify({username: username, password: password}) 
-      });
-
-      response.then((resp) => {
-        return resp.ok;
-      })
+      }).then(
+        (resp) => {
+          return resp.ok;
+        }
+      )
+      return response;
     }
     

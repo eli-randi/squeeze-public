@@ -15,7 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BigOrange from './big-orange.jpg';
 import { APILogin } from '../util/API';
 import CSRFToken from '../util/Csrf';
-
+import FormHelperText from '@mui/material/FormHelperText';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -23,10 +24,22 @@ export default function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(false);
+    let navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        APILogin(username, password);
+        setLoginError(false);
+        const loggedInPromise = APILogin(username, password);
+        loggedInPromise.then(
+            (loggedIn) => {
+                if(loggedIn) {
+                    navigate("/home");
+                } else {
+                    setLoginError(true);
+                }
+            }
+        )     
     };
 
     return (
@@ -63,7 +76,7 @@ export default function Login() {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <CSRFToken />
                             <TextField
                                 margin="normal"
@@ -74,7 +87,7 @@ export default function Login() {
                                 name="username"
                                 autoFocus
                                 onChange = {(e) => setUsername(e.target.value)}
-
+                                error = {loginError}
                             />
                             <TextField
                                 margin="normal"
@@ -86,9 +99,10 @@ export default function Login() {
                                 id="password"
                                 autoComplete="current-password"
                                 onChange = {(e) => setPassword(e.target.value)}
+                                error = {loginError}
 
                             />
-                            
+                            {loginError && <FormHelperText error>Username or password incorrect</FormHelperText>}
                             <Button
                                 type="submit"
                                 fullWidth

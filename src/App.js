@@ -15,22 +15,30 @@ import MailIcon from '@mui/icons-material/Mail';
 import './App.css';
 import { ClippedDrawer } from './Components/ClippedDrawer';
 import Login from './Login/Login';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import { Connectors } from './Connectors/Connectors';
+import { Credentials } from './Credentials/Credentials';
 
 function App() {
   return (
     <div className="App">
-      {/* <ClippedDrawer><Test /><Test /></ClippedDrawer> */}
-      <Login />
+      {/* <ClippedDrawer></ClippedDrawer> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/home' element={<Connectors />}/>
+          <Route path='/accounts' element={<Credentials />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
-
-
-function Test() {
-  return <div>Hello</div>
-}
 
 
 

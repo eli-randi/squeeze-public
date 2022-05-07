@@ -12,7 +12,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-
+import LinkIcon from '@mui/icons-material/Link';
+import { ToolbarItem } from './ToolbarItem';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 const drawerWidth = 240;
 
@@ -23,7 +25,7 @@ export function ClippedDrawer(props) {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Clipped drawer
+            This is Squeeze
           </Typography>
         </Toolbar>
       </AppBar>
@@ -38,14 +40,8 @@ export function ClippedDrawer(props) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ToolbarItem text='Connectors' icon={<LinkIcon />} path='/home'/>
+            <ToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' />
           </List>
           <Divider />
           <List>
