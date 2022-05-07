@@ -29,7 +29,7 @@ function App() {
       {/* <ClippedDrawer></ClippedDrawer> */}
       <BrowserRouter>
         <Routes>
-          <Route path='/login' element={<Login />}/>
+          <Route path='/' element={<Login />}/>
           <Route path='/home' element={<Connectors />}/>
           <Route path='/accounts' element={<Credentials />} />
         </Routes>
