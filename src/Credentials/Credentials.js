@@ -86,7 +86,6 @@ const [credentials, setCredentials] = useState([])
 
 useEffect(() => {
     APICredentials().then((resp) => {
-        console.log(resp)
         setCredentials(resp);
         setIsLoading(false);
     })
