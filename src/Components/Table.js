@@ -139,7 +139,7 @@ export default function BasicTable(props) {
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <Grid
                 sx={{
-                    backgroundColor: 'primary.dark'
+                    backgroundColor: 'secondary.main'
                 }}
                 spacing={2}
                 pl={5}
@@ -151,7 +151,7 @@ export default function BasicTable(props) {
                 alignItems="center">
                 <Grid item xs={6}
                 >
-                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'white' }}>
+                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white'}}>
                         {title}
                     </Typography>
                 </Grid>

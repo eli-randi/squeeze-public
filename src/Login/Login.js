@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -16,7 +14,10 @@ import BigOrange from './big-orange.jpg';
 import { APILogin } from '../util/API';
 import CSRFToken from '../util/Csrf';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import {AuthContext} from '../Components/Auth'
+import Loader from '../Components/Loader';
+
 
 const theme = createTheme();
 
@@ -26,6 +27,9 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false);
     let navigate = useNavigate();
+    let auth = useContext(AuthContext);
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/home";
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -34,13 +38,26 @@ export default function Login() {
         loggedInPromise.then(
             (loggedIn) => {
                 if(loggedIn) {
-                    navigate("/home");
+                    auth.refreshLoginFromServer();
+                    navigate(from);
                 } else {
                     setLoginError(true);
                 }
             }
         )     
     };
+
+    if (auth.isLoggedIn == null) {
+        return (
+            <Loader />
+        )
+    } 
+
+
+    if (auth.isLoggedIn) {
+        navigate(from, { replace: true });
+        return <Loader />
+    }
 
     return (
         <ThemeProvider theme={theme}>

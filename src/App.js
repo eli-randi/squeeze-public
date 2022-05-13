@@ -1,19 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import './App.css';
-import { ClippedDrawer } from './Components/ClippedDrawer';
 import Login from './Login/Login';
 import {
   BrowserRouter,
@@ -22,19 +8,60 @@ import {
 } from "react-router-dom";
 import { Connectors } from './Connectors/Connectors';
 import { Credentials } from './Credentials/Credentials';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { AuthProvider, RequireAuth } from './Components/Auth';
+import ErrorSnackbar, { ErrorProvider } from './Components/Error';
+
+const theme = createTheme(
+  {
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#ffc400',
+      },
+      secondary: {
+        main: '#006508',
+      },
+    },
+    text: {
+      primary: '#000000',
+      secondary: '#ffffff'
+    },
+    typography: {
+      fontFamily: 'Rubik',
+    },
+  }
+);
 
 function App() {
   return (
-    <div className="App">
-      {/* <ClippedDrawer></ClippedDrawer> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />}/>
-          <Route path='/home' element={<Connectors />}/>
-          <Route path='/accounts' element={<Credentials />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <ErrorProvider>
+          <AuthProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path='/' element={<Login />} />
+                  <Route path='/home' element={
+                      <RequireAuth>
+                        <Connectors />
+                      </RequireAuth>
+                    } 
+                  />
+                  <Route path='/accounts' element={
+                    <RequireAuth>
+                      <Credentials />
+                    </RequireAuth>
+                    } 
+                    />
+                
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+          <ErrorSnackbar />
+        </ErrorProvider>
+      </div>
+    </ThemeProvider>
   );
 }
 

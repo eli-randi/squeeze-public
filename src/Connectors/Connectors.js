@@ -1,6 +1,6 @@
 import { ClippedDrawer } from "../Components/ClippedDrawer";
 import React, { useEffect, useState } from "react";
-import { APIConnectors, APIWorkflows } from '../util/API'
+import { APIConnectors, APIWorkflows, APIDeleteConnector } from '../util/API'
 import BasicTable from "../Components/Table";
 import GoogleAnalyticsLogo from './google-analytics-logo.png';
 import InstagramLogo from './Instagram_logo.png';
@@ -17,7 +17,8 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import Modal from "../Components/Modal";
 import { CircularProgress } from "@mui/material";
-
+import AlertModal from "../Components/AlertModal";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ConnectorIcons = {
     google_analytics: GoogleAnalyticsLogo,
@@ -103,49 +104,75 @@ export function Connectors() {
         APIWorkflows(connector.id).then((resp) => {
             info.workflows = resp
             setConnectorInfo(info);
-            console.log(connectorInfo);
             setIsLoadingConnectorInfo(false);
-            }
+        }
         )
         setOpenModal(true);
     }
 
     const handleClose = (e) => {
         setOpenModal(false);
-        setConnectorInfo(null);      
+        setConnectorInfo(null);
     }
 
     useEffect(() => {
-        APIConnectors().then((resp) => {
-            console.log(resp)
-            setConnectors(resp);
-            setisLoading(false);
-        })
-
-    }, [])
+        if(isLoading) {
+            APIConnectors().then((resp) => {
+                setConnectors(resp);
+                setisLoading(false);
+            })
+        }
+    }, [isLoading])
 
     const getModalTitle = () => {
-        if(connectorInfo) {
+        if (connectorInfo) {
             return (
                 <Grid
-                container
-                spacing={2}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center">
-                <Grid item>
-                    {connectorInfo.name}
-                </Grid>
-                {ConnectorIcons ?
+                    container
+                    spacing={2}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center">
                     <Grid item>
-                        <img src={ConnectorIcons[connectorInfo.type] || ConnectorIcons['defaultImage']}
-                            style={{ width: 40 }} />
-                    </Grid> : null}
-            </Grid>
+                        {connectorInfo.name}
+                    </Grid>
+                    {ConnectorIcons ?
+                        <Grid item>
+                            <img src={ConnectorIcons[connectorInfo.type] || ConnectorIcons['defaultImage']}
+                                style={{ width: 40 }} />
+                        </Grid> : null}
+                </Grid>
             )
         }
     }
-    
+
+    const deleteConnectorFunction = () => {
+        if (connectorInfo) {
+            let id = connectorInfo.id;
+            APIDeleteConnector(id).then((_) => {
+                setisLoading(true);
+                handleClose();
+                
+            }
+            )
+
+        }
+
+    }
+
+    const handleAlertModal = () => {
+        return (
+            <AlertModal
+                deleteConnector={deleteConnectorFunction}
+                alertButtonIcon={<DeleteIcon />}
+                alertButtonText='Delete'
+                alertTitle='Are you sure you want to delete this connector'
+                alertText='Press Confirm to delete the connector'
+                buttonColor='error'
+            />
+        )
+    }
+
 
 
     return (
@@ -158,22 +185,23 @@ export function Connectors() {
                 search={true}
                 searchKey={(row) => row.name}
                 columnStyle={ColumnStyle}
-                isLoading = {isLoading}
-                rowOnClick = {rowOnClick}
+                isLoading={isLoading}
+                rowOnClick={rowOnClick}
             />
-            <Modal 
-                title = {getModalTitle()}
-                open = {openModal}
-                handleClose = {handleClose}
+            <Modal
+                title={getModalTitle()}
+                open={openModal}
+                handleClose={handleClose}
+                deleteFunction={handleAlertModal()}
             >
-                <BasicTable 
-                rows = {(connectorInfo && connectorInfo.workflows) || []}
-                title = 'Recent Workflows'
-                headlines = {WorkflowHeads}
-                search={false}
-                isLoading = {isLoadingConnectorInfo}
-                renderFunctions = {WorkflowFunctions}
-                disablePagination = {true}
+                <BasicTable
+                    rows={(connectorInfo && connectorInfo.workflows) || []}
+                    title='Recent Workflows'
+                    headlines={WorkflowHeads}
+                    search={false}
+                    isLoading={isLoadingConnectorInfo}
+                    renderFunctions={WorkflowFunctions}
+                    disablePagination={true}
                 />
             </Modal>
         </ClippedDrawer>
