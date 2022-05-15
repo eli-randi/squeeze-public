@@ -109,8 +109,8 @@ export default function BasicTable(props) {
     let searchedRows = rows;
 
     if (searched) {
-        searchedRows = searchedRows.filter((rows) => {
-            return props.searchKey(rows).includes(searched)
+        searchedRows = searchedRows.filter((row) => {
+            return props.searchKey(row).toLowerCase().includes(searched.toLowerCase())
 
         })
     }

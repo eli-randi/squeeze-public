@@ -11,12 +11,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BigOrange from './big-orange.jpg';
-import { APILogin } from '../util/API';
+import { loginToAPI } from '../util/API';
 import CSRFToken from '../util/Csrf';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {AuthContext} from '../Components/Auth'
 import Loader from '../Components/Loader';
+import { ErrorContext } from '../Components/Error';
 
 
 const theme = createTheme();
@@ -26,6 +27,7 @@ export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false);
+    const errorContext = useContext(ErrorContext);
     let navigate = useNavigate();
     let auth = useContext(AuthContext);
     let location = useLocation();
@@ -34,7 +36,7 @@ export default function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         setLoginError(false);
-        const loggedInPromise = APILogin(username, password);
+        const loggedInPromise = loginToAPI(username, password, errorContext);
         loggedInPromise.then(
             (loggedIn) => {
                 if(loggedIn) {

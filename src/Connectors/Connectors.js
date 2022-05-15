@@ -1,6 +1,6 @@
 import { ClippedDrawer } from "../Components/ClippedDrawer";
-import React, { useEffect, useState } from "react";
-import { APIConnectors, APIWorkflows, APIDeleteConnector } from '../util/API'
+import React, { useEffect, useState, useContext } from "react";
+import { getConnectorsFromAPI, getWorkflowsFromAPI, deleteConnectorFromAPI } from '../util/API'
 import BasicTable from "../Components/Table";
 import GoogleAnalyticsLogo from './google-analytics-logo.png';
 import InstagramLogo from './Instagram_logo.png';
@@ -19,6 +19,7 @@ import Modal from "../Components/Modal";
 import { CircularProgress } from "@mui/material";
 import AlertModal from "../Components/AlertModal";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ErrorContext } from "../Components/Error";
 
 const ConnectorIcons = {
     google_analytics: GoogleAnalyticsLogo,
@@ -91,6 +92,7 @@ const WorkflowFunctions = [renderWorkflowStatus, renderWorkflowStarted, renderWo
 
 export function Connectors() {
 
+    const errorContext = useContext(ErrorContext)
     const [openModal, setOpenModal] = useState(false);
     const [isLoading, setisLoading] = useState(true);
     const [connectors, setConnectors] = useState([]);
@@ -101,7 +103,7 @@ export function Connectors() {
         setIsLoadingConnectorInfo(true);
         let info = connector;
         setConnectorInfo(info);
-        APIWorkflows(connector.id).then((resp) => {
+        getWorkflowsFromAPI(connector.id, errorContext).then((resp) => {
             info.workflows = resp
             setConnectorInfo(info);
             setIsLoadingConnectorInfo(false);
@@ -117,7 +119,7 @@ export function Connectors() {
 
     useEffect(() => {
         if(isLoading) {
-            APIConnectors().then((resp) => {
+            getConnectorsFromAPI(errorContext).then((resp) => {
                 setConnectors(resp);
                 setisLoading(false);
             })
@@ -149,7 +151,7 @@ export function Connectors() {
     const deleteConnectorFunction = () => {
         if (connectorInfo) {
             let id = connectorInfo.id;
-            APIDeleteConnector(id).then((_) => {
+            deleteConnectorFromAPI(id, errorContext).then((_) => {
                 setisLoading(true);
                 handleClose();
                 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {APIMeta} from '../util/API';
+import {getMetaFromAPI} from '../util/API';
 import {useLocation, Navigate} from 'react-router-dom';
 import Loader from "./Loader";
 import { ErrorContext } from "./Error";
@@ -16,7 +16,7 @@ export function AuthProvider(props) {
   useEffect(
       () => {
         const APICall = async () => {
-            let meta = await APIMeta(error)
+            let meta = await getMetaFromAPI(error)
             setIsLoggedIn(meta.is_authenticated)
         }
 

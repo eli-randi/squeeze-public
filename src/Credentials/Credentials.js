@@ -1,6 +1,6 @@
 import { ClippedDrawer } from "../Components/ClippedDrawer";
-import React, { useState, useEffect } from "react";
-import { APICredentials } from "../util/API";
+import React, { useState, useEffect, useContext } from "react";
+import { getCredentialsFromAPI } from "../util/API";
 import BasicTable from "../Components/Table";
 import LinkedinLogo from '../Connectors/LinkedIn_logo.png';
 import TwitterLogo from '../Connectors/Twitter-logo.png'
@@ -13,7 +13,7 @@ import DefaultImage from '../Connectors/DefaultImage.png';
 import { Grid } from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from "@mui/material";
-import { useBeforeunload } from 'react-beforeunload';
+import ErrorContext from '../Components/Error'
 
 
 
@@ -35,8 +35,8 @@ const CredentialIcons = {
 const ColumnStyle = [{ width: '50%' }, { width: '35%' }, { width: '15%' }]
 
 export function Credentials() {
+    const errorContext = useContext(ErrorContext)
     const [isLoading, setIsLoading] = useState(true);
-    const [isUnloaded, setIsUnloaded] = useState(false);
 
     const renderDescription = (row) => row.description;
     const renderType = (row) => {
@@ -59,14 +59,6 @@ export function Credentials() {
         )
     };
 
-    // const handleRefresh = (e) => {
-    //     // const authWindow = window.open(row.refresh_url, "MsgWindow", "width=500,height=500");
-    //     // authWindow.addEventListener('beforeunload', (event) => {
-    //     //     event.returnValue = `Are you sure you want to leave?`;
-    //     // });
-
-    // }
-
     const renderRefresh = (row) => {
         return (
             row.can_refresh ?
@@ -85,7 +77,7 @@ const CredentialFunctions = [renderDescription, renderType, renderRefresh]
 const [credentials, setCredentials] = useState([])
 
 useEffect(() => {
-    APICredentials().then((resp) => {
+    getCredentialsFromAPI(errorContext).then((resp) => {
         setCredentials(resp);
         setIsLoading(false);
     })

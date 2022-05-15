@@ -8,24 +8,26 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import LinkIcon from '@mui/icons-material/Link';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { LinkedToolbarItem, ButtonToolbarItem } from './ToolbarItem';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { APILogout } from '../util/API';
+import { logoutFromAPI } from '../util/API';
 import { AuthContext } from './Auth';
+import ErrorContext from './Error'
 
 const drawerWidth = 240;
-
-
-const handleLogoutClick = (auth) => {
-  APILogout().then((_) => {
-    auth.refreshLoginFromServer();
-  })
-}
 
 export function ClippedDrawer(props) {
   let auth = useContext(AuthContext);
 
+  let errorContext = useContext(ErrorContext)
+
+  const handleLogoutClick = () => {
+    logoutFromAPI(errorContext).then((_) => {
+      auth.refreshLoginFromServer();
+  })
+}
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -49,10 +51,11 @@ export function ClippedDrawer(props) {
           <List>
             <LinkedToolbarItem text='Connectors' icon={<LinkIcon />} path='/home'/>
             <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' />
+            <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon />} path='/dashboards' />
           </List>
           <Divider />
           <List>
-            <ButtonToolbarItem text='Log out' icon={<LogoutIcon />} handleClick={() => handleLogoutClick(auth)}/>
+            <ButtonToolbarItem text='Log out' icon={<LogoutIcon />} handleClick={handleLogoutClick}/>
           </List>
         </Box>
       </Drawer>

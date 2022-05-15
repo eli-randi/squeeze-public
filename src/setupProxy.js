@@ -17,6 +17,14 @@ module.exports = function(app) {
       cookieDomainRewrite: 'localhost'
     })
   );
+  app.use(
+    '/reporting',
+    createProxyMiddleware({
+      target: 'https://api.thisissqueeze.com',
+      changeOrigin: true,
+      cookieDomainRewrite: 'localhost'
+    })
+  );
   
 };
 

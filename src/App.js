@@ -11,6 +11,7 @@ import { Credentials } from './Credentials/Credentials';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { AuthProvider, RequireAuth } from './Components/Auth';
 import ErrorSnackbar, { ErrorProvider } from './Components/Error';
+import { Dashboards } from './Dashboards/Dashboard';
 
 const theme = createTheme(
   {
@@ -51,6 +52,12 @@ function App() {
                   <Route path='/accounts' element={
                     <RequireAuth>
                       <Credentials />
+                    </RequireAuth>
+                    } 
+                    />
+                  <Route path='/dashboards' element={
+                    <RequireAuth>
+                      <Dashboards />
                     </RequireAuth>
                     } 
                     />
