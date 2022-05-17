@@ -1,4 +1,4 @@
-import React , {useContext} from 'react';
+import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -13,21 +13,23 @@ import { LinkedToolbarItem, ButtonToolbarItem } from './ToolbarItem';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logoutFromAPI } from '../util/API';
-import { AuthContext } from './Auth';
-import ErrorContext from './Error'
+import { MetaContext } from './Auth';
+import ErrorContext from './Error';
+import { Grid } from '@mui/material';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
 const drawerWidth = 240;
 
 export function ClippedDrawer(props) {
-  let auth = useContext(AuthContext);
+  let auth = useContext(MetaContext);
 
   let errorContext = useContext(ErrorContext)
 
   const handleLogoutClick = () => {
     logoutFromAPI(errorContext).then((_) => {
       auth.refreshLoginFromServer();
-  })
-}
+    })
+  }
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -47,22 +49,46 @@ export function ClippedDrawer(props) {
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-            <LinkedToolbarItem text='Connectors' icon={<LinkIcon />} path='/home'/>
-            <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' />
-            <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon />} path='/dashboards' />
-          </List>
-          <Divider />
-          <List>
-            <ButtonToolbarItem text='Log out' icon={<LogoutIcon />} handleClick={handleLogoutClick}/>
-          </List>
-        </Box>
-      </Drawer>
+        
+          <Grid
+            container
+            direction={'column'}
+            justifyContent={'space-between'}
+            height={'100%'}
+          >
+            <Grid
+              item
+              width={'100%'}
+            >
+              <List>
+                <LinkedToolbarItem text='Connectors' icon={<LinkIcon />} path='/home' />
+                <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' />
+                <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon />} path='/dashboards' />
+              </List>
+              <Divider />
+              <List>
+                <LinkedToolbarItem text='Add dashboard' icon={<DashboardCustomizeIcon />} path='/add_dashboard' />
+                {/* <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' /> */}
+              </List>
+            </Grid>
+            <Grid
+              item
+            >
+              <List>
+                <ButtonToolbarItem
+                  text='Log out'
+                  icon={<LogoutIcon />}
+                  handleClick={handleLogoutClick}
+                />
+              </List>
+            </Grid>
+          </Grid>
+        
+      </Drawer >
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {props.children}
       </Box>
-    </Box>
+    </Box >
   );
 }
