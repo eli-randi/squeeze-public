@@ -61,7 +61,7 @@ export function getDashboardsFromAPI(errorContext) {
   )
 }
 
-function APIPost(url, body, errorContext) {
+export function APIPost(url, body, errorContext) {
   let paramsForFetch = {
     method: 'POST',
     mode: 'cors',

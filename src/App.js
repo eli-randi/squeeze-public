@@ -9,9 +9,10 @@ import {
 import { Connectors } from './Connectors/Connectors';
 import { Credentials } from './Credentials/Credentials';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { AuthProvider, RequireAuth } from './Components/Auth';
+import { MetaProvider, RequireAuth } from './Components/Auth';
 import ErrorSnackbar, { ErrorProvider } from './Components/Error';
 import { Dashboards } from './Dashboards/Dashboard';
+import { AddDashboard } from './Dashboards/AddDashboard';
 
 const theme = createTheme(
   {
@@ -39,7 +40,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <ErrorProvider>
-          <AuthProvider>
+          <MetaProvider>
             <BrowserRouter>
               <Routes>
                 <Route path='/' element={<Login />} />
@@ -61,10 +62,16 @@ function App() {
                     </RequireAuth>
                     } 
                     />
+                    <Route path='/add_dashboard' element={
+                    <RequireAuth>
+                      <AddDashboard />
+                    </RequireAuth>
+                    } 
+                    />
                 
               </Routes>
             </BrowserRouter>
-          </AuthProvider>
+          </MetaProvider>
           <ErrorSnackbar />
         </ErrorProvider>
       </div>

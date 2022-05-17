@@ -1,35 +1,41 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {getMetaFromAPI} from '../util/API';
 import {useLocation, Navigate} from 'react-router-dom';
 import Loader from "./Loader";
 import { ErrorContext } from "./Error";
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 
-export const AuthContext = React.createContext(null);
+export const MetaContext = React.createContext(null);
 
-export function AuthProvider(props) {
-  let [isLoggedIn, setIsLoggedIn] = React.useState(null);
+export function MetaProvider(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [maximumDashboards, setMaximumDashboards] = useState(null)
+  const [fullMeta, setFullMeta] = useState(null)
 
   const error = useContext(ErrorContext);
   const refreshLoginFromServer = () => setIsLoggedIn(null);
+  
 
   useEffect(
       () => {
         const APICall = async () => {
             let meta = await getMetaFromAPI(error)
             setIsLoggedIn(meta.is_authenticated)
+            setMaximumDashboards(meta.dashboards.maximum_tabs)
+            setFullMeta(meta)
         }
-
         if (isLoggedIn == null) {
             APICall()
         }
     }, [isLoggedIn])
 
-  return <AuthContext.Provider value={{isLoggedIn, refreshLoginFromServer}}>{props.children}</AuthContext.Provider>;
+  return <MetaContext.Provider value={{isLoggedIn, refreshLoginFromServer, maximumDashboards, fullMeta}}>{props.children}</MetaContext.Provider>;
+  
 }
 
 export function RequireAuth(props) {
-    let auth = useContext(AuthContext);
+    let auth = useContext(MetaContext);
     let location = useLocation();
   
     if (auth.isLoggedIn == null) {

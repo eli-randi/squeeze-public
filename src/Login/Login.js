@@ -15,7 +15,7 @@ import { loginToAPI } from '../util/API';
 import CSRFToken from '../util/Csrf';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {AuthContext} from '../Components/Auth'
+import {MetaContext} from '../Components/Auth'
 import Loader from '../Components/Loader';
 import { ErrorContext } from '../Components/Error';
 
@@ -29,7 +29,7 @@ export default function Login() {
     const [loginError, setLoginError] = useState(false);
     const errorContext = useContext(ErrorContext);
     let navigate = useNavigate();
-    let auth = useContext(AuthContext);
+    let auth = useContext(MetaContext);
     let location = useLocation();
     let from = location.state?.from?.pathname || "/home";
 
