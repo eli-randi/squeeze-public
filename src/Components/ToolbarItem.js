@@ -5,15 +5,12 @@ import ListItemText from '@mui/material/ListItemText';
 import { ListItemButton } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import Divider from '@mui/material/Divider';
-import { makeStyles } from '@material-ui/styles';
-
-
 
 
 export function LinkedToolbarItem(props) {
-
     let location = useLocation()
-    let pathMatches = location.pathname == props.path
+    let pathMatches = location.pathname === props.path
+    
     return (
             <>
             

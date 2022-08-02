@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Backdrop } from '@mui/material';
 import { MetaContext } from '../Components/Auth';
-import {prettifySnakeCase} from '../util/Utils'
+import {BackButton, prettifySnakeCase} from '../util/Utils'
 
 
 
@@ -116,6 +116,8 @@ export function AddDashboard() {
     return (
         <>
             <ClippedDrawer>
+            <BackButton
+            url={'/dashboards'} />
                 <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%' }}>
                     <Grid
                         sx={{

@@ -53,7 +53,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <div className="App"> */}
+      <div className="App">
         <ErrorProvider>
           <MetaProvider>
             <BrowserRouter>
@@ -106,7 +106,7 @@ function App() {
           </MetaProvider>
           <ErrorSnackbar />
         </ErrorProvider>
-      {/* </div> */}
+      </div>
     </ThemeProvider>
   );
 }
