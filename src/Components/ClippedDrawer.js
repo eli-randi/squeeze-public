@@ -41,7 +41,7 @@ export function ClippedDrawer(props) {
       >
         <Toolbar
         >
-              <Typography variant="h4" color={'common.white'} noWrap component="div" sx={{ fontWeight: 'bold', fontFamily: 'Rubik' }}>
+              <Typography variant="h4" color={'common.white'} noWrap component="div" sx={{ fontWeight: 'bold' }}>
                 This is Squeeze
               </Typography>
         </Toolbar>
@@ -96,7 +96,6 @@ export function ClippedDrawer(props) {
 
             <List>
               <Typography
-                
                 sx={{ color: 'common.white' }}
               >
                 <LinkedToolbarItem text='Connectors' icon={<LinkIcon color='white' />} path='/home' />
@@ -104,11 +103,6 @@ export function ClippedDrawer(props) {
                 <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon color='white' />} path='/dashboards' />
               </Typography>
             </List>
-          {/* Add in speed dial */}
-            {/* <List>
-              <LinkedToolbarItem text='Add dashboard' icon={<DashboardCustomizeIcon />} path='/add_dashboard' />
-            </List> */}
-
           </Grid>
           <Grid
             item

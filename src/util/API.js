@@ -34,7 +34,7 @@ export function getConnectorsFromAPI(errorContext) {
   }
 
 export function getCredentialsFromAPI(errorContext) {
-  return APIGet('/credentials', errorContext).then(jsonResponse => {
+  return APIGet('/credentials/', errorContext).then(jsonResponse => {
       return jsonResponse.data;
     });
 }

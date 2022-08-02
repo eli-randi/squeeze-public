@@ -151,7 +151,7 @@ export default function BasicTable(props) {
                 alignItems="center">
                 <Grid item xs={6}
                 >
-                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white', fontFamily: 'Rubik'}}>
+                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white'}}>
                         {title}
                     </Typography>
                 </Grid>
