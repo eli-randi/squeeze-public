@@ -72,6 +72,7 @@ export function ClippedDrawer(props) {
             item
             height={'90px'}
             paddingY={'5px'}
+            marginX={'auto'}
           >
             <Link
             to={{
