@@ -4,7 +4,7 @@ import { Paper, Grid, Box, Typography, TextField, Button, MenuItem, IconButton }
 import { useState, useContext, useEffect } from "react";
 import { MetaContext } from "../Components/Auth";
 import { find } from "lodash";
-import { openCredentialWindow, prettifySnakeCase } from "../util/Utils";
+import { BackButton, openCredentialWindow, prettifySnakeCase } from "../util/Utils";
 import { ErrorContext } from "../Components/Error";
 import { APIGet, APIPost, API_HOST } from "../util/API";
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -200,12 +200,8 @@ export const AddConnector = () => {
 
     return (
         <ClippedDrawer>
-            <Button variant="outlined" color="secondary" startIcon={<KeyboardReturnIcon />}
-            sx={{float: 'left', marginLeft: '10px', marginBottom: '20px', marginTop: '-10px'}}
-            onClick={() => navigate('/add_connector')}
-            >
-                Back
-            </Button>
+            <BackButton
+            url = {'/add_connector'} />
             <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%' }}>
                 <Grid
                     sx={{
@@ -226,7 +222,7 @@ export const AddConnector = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <img src={getConnectorIcon(connectorType)} height={35} />
+                        <img src={getConnectorIcon(connectorType)} height={35} alt='Social Media Icon'/>
                     </Grid>
                 </Grid>
                 <Box

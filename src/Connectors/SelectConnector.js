@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { Grid, Paper, Typography, Card, CardActionArea, CardContent } from "@mui/material";
 import CustomizedInputBase from "../Components/SearchBar";
 import { getConnectorIcon } from "./ConnectorIcons";
+import { BackButton } from "../util/Utils";
 
 export const SelectConnector = () => {
     const meta = useContext(MetaContext);
@@ -27,6 +28,8 @@ export const SelectConnector = () => {
 
     return (
         <ClippedDrawer>
+            <BackButton
+            url = {'/home'} />
             <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
                 <Grid
                     sx={{
@@ -76,7 +79,7 @@ export const SelectConnector = () => {
                         console.log(connector.name)
                         return (
                             <Grid item>
-                               <Card sx={{ width: 345 }}>
+                               <Card sx={{ width: 340 }}>
                                 <CardActionArea
                                     onClick={() => {
                                         navigate(`/add_connector/${connector.name}`)

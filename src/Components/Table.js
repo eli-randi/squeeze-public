@@ -186,7 +186,7 @@ export default function BasicTable(props) {
                             props.isLoading && renderLoading()                        
                         }
                         {
-                            !props.isLoading && rowsToRender.length==0 && 
+                            !props.isLoading && rowsToRender.length === 0 && 
                             <TableRow>
                                 <TableCell
                                     colSpan={headlines.length}

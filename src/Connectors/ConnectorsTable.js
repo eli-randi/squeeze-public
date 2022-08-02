@@ -9,7 +9,6 @@ import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import IconButton from '@mui/material/IconButton';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
@@ -17,7 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import moment from 'moment';
-import { Grid, Input } from '@mui/material';
+import { Grid } from '@mui/material';
 import CustomizedInputBase from '../Components/SearchBar';
 import { Typography } from '@mui/material';
 import GoogleAnalyticsLogo from './google-analytics-logo.png';
@@ -202,7 +201,8 @@ export default function ConnectorsTable(props) {
                                     alignItems="center">
                                         <Grid item>
                                            <img src={ConnectorIcons[connector.type] || DefaultImage} 
-                                           style={{width: 40}}/>
+                                           style={{width: 40}}
+                                           alt='Social Media Icon'/>
                                         </Grid>
                                         <Grid item>
                                             {connector.label}

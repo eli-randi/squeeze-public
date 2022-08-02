@@ -17,11 +17,9 @@ import ErrorContext from './Error';
 import { Grid } from '@mui/material';
 import SqueezeLogo from './SqueezeLogo.png'
 import { Link } from 'react-router-dom';
-
+import { wrap } from 'lodash';
 
 const drawerWidth = 240;
-
-
 
 export function ClippedDrawer(props) {
   let auth = useContext(MetaContext);
@@ -37,13 +35,13 @@ export function ClippedDrawer(props) {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer - 1, paddingLeft: '240px', height: '90px', justifyContent:'center' }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer - 1, paddingLeft: '240px', height: '90px', justifyContent: 'center' }}
       >
         <Toolbar
         >
-              <Typography variant="h4" color={'common.white'} noWrap component="div" sx={{ fontWeight: 'bold' }}>
-                This is Squeeze
-              </Typography>
+          <Typography variant="h4" color={'common.white'} noWrap component="div" sx={{ fontWeight: 'bold' }}>
+            This is Squeeze
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -55,15 +53,14 @@ export function ClippedDrawer(props) {
           ['& .MuiToolbar-gutters']: { display: 'none' },
           paddingTop: 0,
           marginTop: 0,
-
         }}
       >
         <Toolbar />
-
         <Grid
           container
           direction={'column'}
           justifyContent={'flex-start'}
+          
           height={'100%'}
           sx={{ backgroundColor: 'secondary.dark', text: 'common.white' }}
 
@@ -73,57 +70,60 @@ export function ClippedDrawer(props) {
             height={'90px'}
             paddingY={'5px'}
             marginX={'auto'}
+            sx = {{[`@media screen and (max-height: 700px)`]: {
+              height: '50px'
+            }}}
           >
             <Link
-            to={{
-              pathname: '/home'
-            }}>
-            <img src={SqueezeLogo} height='80px' margin='auto' />
+              to={{
+                pathname: '/home'
+              }}>
+              <img src={SqueezeLogo} 
+              height='100%' 
+              margin='auto' alt='Squeeze Logo' />
             </Link>
-            
+
           </Grid>
           <Grid item height={'85%'}>
-            <Grid 
-            container
-            direction={'column'}
-            justifyContent={'space-between'}
-            height={'100%'}
+            <Grid
+              container
+              direction={'column'}
+              justifyContent={'space-between'}
+              height={'100%'}
             >
               <Grid
-            item
-            width={'100%'}
-            // height={'40%'}
-          >
+                item
+                width={'100%'}
+              // height={'40%'}
+              >
 
-            <List>
-              <Typography
-                sx={{ color: 'common.white' }}
+                <List>
+                  <Typography
+                    sx={{ color: 'common.white' }}
+                  >
+                    <LinkedToolbarItem text='Connectors' icon={<LinkIcon color='white' />} path='/home' />
+                    <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon color='white' />} path='/accounts' />
+                    <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon color='white' />} path='/dashboards' />
+                  </Typography>
+                </List>
+              </Grid>
+              <Grid
+                item
               >
-                <LinkedToolbarItem text='Connectors' icon={<LinkIcon color='white' />} path='/home' />
-                <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon color='white' />} path='/accounts' />
-                <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon color='white' />} path='/dashboards' />
-              </Typography>
-            </List>
-          </Grid>
-          <Grid
-            item
-          >
-            <List>
-            <Typography
-                sx={{ color: 'common.white' }}
-              >
-              <ButtonToolbarItem
-                text='Log out'
-                icon={<LogoutIcon color='white'/>}
-                handleClick={handleLogoutClick}
-              />
-              </Typography>
-            </List>
-          </Grid>
+                <List>
+                  <Typography
+                    sx={{ color: 'common.white' }}
+                  >
+                    <ButtonToolbarItem
+                      text='Log out'
+                      icon={<LogoutIcon color='white' />}
+                      handleClick={handleLogoutClick}
+                    />
+                  </Typography>
+                </List>
+              </Grid>
             </Grid>
           </Grid>
-          
-          
         </Grid>
 
       </Drawer >
