@@ -39,13 +39,13 @@ const theme = createTheme(
       secondary: '#ffffff'
     },
     typography: {
-      fontFamily: 'Inter, Rubik',
+      fontFamily: 'Rubik',
 
 
     },
     drawerPaper: {
       width: "inherit",
-      paddingTop: 0  // equal to AppBar height (on desktop)
+      paddingTop: 0 
     },
   }
 );
