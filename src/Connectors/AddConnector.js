@@ -275,7 +275,5 @@ export const AddConnector = () => {
                 </Box>
             </Paper>
         </ClippedDrawer>
-
     )
-
 }

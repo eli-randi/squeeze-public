@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Login from './Login/Login';
+import {Login} from './Login/Login';
 import {
   BrowserRouter,
   Routes,
@@ -40,8 +40,6 @@ const theme = createTheme(
     },
     typography: {
       fontFamily: 'Rubik',
-
-
     },
     drawerPaper: {
       width: "inherit",
@@ -55,7 +53,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      {/* <div className="App"> */}
         <ErrorProvider>
           <MetaProvider>
             <BrowserRouter>
@@ -108,7 +106,7 @@ function App() {
           </MetaProvider>
           <ErrorSnackbar />
         </ErrorProvider>
-      </div>
+      {/* </div> */}
     </ThemeProvider>
   );
 }
