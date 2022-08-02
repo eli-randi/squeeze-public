@@ -4,7 +4,7 @@ import cookie from 'react-cookies';
 const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3000' : 'https://api.thisissqueeze.com'
 
 
-function APIGet (url, errorContext) {
+export function APIGet (url, errorContext) {
   const response = fetch(API_HOST + url, {
     method: 'GET',
     mode: 'cors',

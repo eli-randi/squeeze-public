@@ -44,7 +44,7 @@ export default function Modal(props) {
           
           <Grid item>
             <DialogActions>
-              <Button onClick={props.handleClose}>Close</Button>
+              <Button variant='contained' onClick={props.handleClose}>Close</Button>
             </DialogActions>
           </Grid>
         </Grid>

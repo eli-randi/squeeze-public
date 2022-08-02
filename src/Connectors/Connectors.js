@@ -2,14 +2,6 @@ import { ClippedDrawer } from "../Components/ClippedDrawer";
 import React, { useEffect, useState, useContext } from "react";
 import { getConnectorsFromAPI, getWorkflowsFromAPI, deleteConnectorFromAPI } from '../util/API'
 import BasicTable from "../Components/Table";
-import GoogleAnalyticsLogo from './google-analytics-logo.png';
-import InstagramLogo from './Instagram_logo.png';
-import DefaultImage from './DefaultImage.png';
-import GoogleAdsLogo from './GoogleAdsLogo.png';
-import GoogleSheetsLogo from './GoogleSheetsLogo.png';
-import LinkedinLogo from './LinkedIn_logo.png';
-import TwitterLogo from './Twitter-logo.png';
-import TikTokLogo from './TikTokLogo.png';
 import { Grid } from "@mui/material";
 import moment from "moment";
 import { Chip } from "@mui/material";
@@ -20,17 +12,7 @@ import { CircularProgress } from "@mui/material";
 import AlertModal from "../Components/AlertModal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ErrorContext } from "../Components/Error";
-
-const ConnectorIcons = {
-    google_analytics: GoogleAnalyticsLogo,
-    instagram_business: InstagramLogo,
-    google_ads: GoogleAdsLogo,
-    linkedin: LinkedinLogo,
-    google_sheets: GoogleSheetsLogo,
-    twitter_organic: TwitterLogo,
-    tiktok_organic: TikTokLogo,
-    defaultImage: DefaultImage,
-}
+import { getConnectorIcon } from "./ConnectorIcons";
 
 const ConnectorHeads = ['Connector Name', 'Type', 'Created', 'Status'];
 
@@ -45,11 +27,11 @@ const renderType = (row) => {
             direction="row"
             justifyContent="flex-start"
             alignItems="center">
-            {ConnectorIcons ?
                 <Grid item>
-                    <img src={ConnectorIcons[row.type] || ConnectorIcons['defaultImage']}
-                        style={{ width: 40 }} />
-                </Grid> : null}
+                    <img src={getConnectorIcon(row.type)}
+                        style={{ width: 40 }}
+                        alt="Social Media Logo" />
+                </Grid>
             <Grid item>
                 {row.label}
             </Grid>
@@ -118,13 +100,13 @@ export function Connectors() {
     }
 
     useEffect(() => {
-        if(isLoading) {
+        if (isLoading) {
             getConnectorsFromAPI(errorContext).then((resp) => {
                 setConnectors(resp);
                 setisLoading(false);
             })
         }
-    }, [isLoading])
+    }, [isLoading, errorContext])
 
     const getModalTitle = () => {
         if (connectorInfo) {
@@ -138,11 +120,12 @@ export function Connectors() {
                     <Grid item>
                         {connectorInfo.name}
                     </Grid>
-                    {ConnectorIcons ?
                         <Grid item>
-                            <img src={ConnectorIcons[connectorInfo.type] || ConnectorIcons['defaultImage']}
-                                style={{ width: 40 }} />
-                        </Grid> : null}
+                            <img src={getConnectorIcon(connectorInfo.type)}
+                                style={{ width: 40 }}
+                                alt="Social Media Logo"
+                            />
+                        </Grid>
                 </Grid>
             )
         }
@@ -154,7 +137,7 @@ export function Connectors() {
             deleteConnectorFromAPI(id, errorContext).then((_) => {
                 setisLoading(true);
                 handleClose();
-                
+
             }
             )
 

@@ -2,19 +2,19 @@ import { ClippedDrawer } from "../Components/ClippedDrawer";
 import React, { useState, useEffect, useContext } from "react";
 import { getCredentialsFromAPI } from "../util/API";
 import BasicTable from "../Components/Table";
-import LinkedinLogo from '../Connectors/LinkedIn_logo.png';
-import TwitterLogo from '../Connectors/Twitter-logo.png'
-import GoogleLogo from './GoogleLogo.png';
-import FacebookLogo from './FacebookLogo.png';
-import ShopifyLogo from './ShopifyLogo.png';
-import KlaviyoLogo from './KlaviyoLogo.svg';
-import PinterestLogo from './Pinterest-logo.png';
-import DefaultImage from '../Connectors/DefaultImage.png';
+import LinkedinLogo from '../assets/LinkedIn_logo.png';
+import TwitterLogo from '../assets/Twitter-logo.png'
+import GoogleLogo from '../assets/GoogleLogo.png';
+import FacebookLogo from '../assets/FacebookLogo.png';
+import ShopifyLogo from '../assets/ShopifyLogo.png';
+import KlaviyoLogo from '../assets/KlaviyoLogo.svg';
+import PinterestLogo from '../assets/Pinterest-logo.png';
+import DefaultImage from '../assets/DefaultImage.png';
 import { Grid } from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from "@mui/material";
 import ErrorContext from '../Components/Error'
-
+import { openCredentialWindow } from "../util/Utils";
 
 
 const CredentialHeads = ['Description', 'Connector Type', 'Refresh']
@@ -29,8 +29,6 @@ const CredentialIcons = {
     Twitter: TwitterLogo,
     defaultImage: DefaultImage,
 }
-
-
 
 const ColumnStyle = [{ width: '50%' }, { width: '35%' }, { width: '15%' }]
 
@@ -50,7 +48,8 @@ export function Credentials() {
                 {CredentialIcons ?
                     <Grid item>
                         <img src={CredentialIcons[row.type] || CredentialIcons['defaultImage']}
-                            style={{ width: 40 }} />
+                            style={{ width: 40 }}
+                            alt='Social Media Logo' />
                     </Grid> : null}
                 <Grid item>
                     {row.type}
@@ -64,7 +63,7 @@ export function Credentials() {
             row.can_refresh ?
                 <IconButton
                     aria-label="refresh"
-                    onClick={(e) => window.open(row.refresh_url, "MsgWindow", "width=500,height=500")}
+                    onClick={(e) => openCredentialWindow(row.refresh_url)}
                 >
                             <RefreshIcon />
                 </IconButton > :
@@ -81,7 +80,7 @@ useEffect(() => {
         setCredentials(resp);
         setIsLoading(false);
     })
-}, [])
+}, [errorContext])
 
 
 return (

@@ -136,7 +136,7 @@ export default function BasicTable(props) {
 
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
             <Grid
                 sx={{
                     backgroundColor: 'secondary.main'
@@ -151,7 +151,7 @@ export default function BasicTable(props) {
                 alignItems="center">
                 <Grid item xs={6}
                 >
-                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white'}}>
+                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white', fontFamily: 'Rubik'}}>
                         {title}
                     </Typography>
                 </Grid>
@@ -159,7 +159,19 @@ export default function BasicTable(props) {
                     {searchIsTrue ? <CustomizedInputBase handleSearchInput={handleSearchInput} /> : null}
                 </Grid>
             </Grid>
-            <TableContainer sx={{ height: 440 }}>
+            <TableContainer sx={{ height: 380, 
+            '&::-webkit-scrollbar': {
+                width: '10px'
+              },
+              '&::-webkit-scrollbar-track': {
+                boxShadow: 'inset 0 0 6px rgba(120,0,0,0.00)',
+                webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'rgba(55,50,52, 0.8)',
+                borderRadius: '5px'
+              }
+            }}>
                 <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
 
                     <TableHead>
@@ -178,12 +190,10 @@ export default function BasicTable(props) {
                             <TableRow>
                                 <TableCell
                                     colSpan={headlines.length}
-                                    // sx={{height: 380}}
                                     rowSpan={3}
                                 >
                                     <div>No results</div>
                                 </TableCell>
-
                             </TableRow>
                         }
                         {

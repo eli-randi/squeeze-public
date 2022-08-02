@@ -116,7 +116,7 @@ export function AddDashboard() {
     return (
         <>
             <ClippedDrawer>
-                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%' }}>
                     <Grid
                         sx={{
                             backgroundColor: 'secondary.main'

@@ -3,7 +3,6 @@ import {getMetaFromAPI} from '../util/API';
 import {useLocation, Navigate} from 'react-router-dom';
 import Loader from "./Loader";
 import { ErrorContext } from "./Error";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 
 export const MetaContext = React.createContext(null);
