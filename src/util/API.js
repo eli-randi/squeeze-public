@@ -1,7 +1,7 @@
 import cookie from 'react-cookies';
 
 
-const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3000' : 'https://api.thisissqueeze.com'
+export const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3000' : 'https://api.thisissqueeze.com'
 
 
 export function APIGet (url, errorContext) {
