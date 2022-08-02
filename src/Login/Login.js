@@ -7,9 +7,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BigOrange from './big-orange.jpg';
 import { loginToAPI } from '../util/API';
 import CSRFToken from '../util/Csrf';
@@ -18,11 +16,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {MetaContext} from '../Components/Auth'
 import Loader from '../Components/Loader';
 import { ErrorContext } from '../Components/Error';
+import SqueezeLogo from '../Components/SqueezeLogo.png'
 
-
-const theme = createTheme();
-
-export default function Login() {
+export function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -62,7 +58,7 @@ export default function Login() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
+        
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -89,10 +85,8 @@ export default function Login() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Avatar sx={{ m: 1}} src={SqueezeLogo} />
+                        <Typography variant="h5">
                             Sign in
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -127,12 +121,15 @@ export default function Login() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+
                             >
                                 Sign In
                             </Button>
                             <Grid container>
-                                <Grid item xs>
-                                    <Link href="mailto:hello@thisissqueeze.com" variant="body2">
+                                <Grid item xs
+                                textAlign='center'
+                                >
+                                    <Link href="mailto:hello@thisissqueeze.com" variant="body2" color='secondary'>
                                         {"Don't have an account? Get in touch."}
                                     </Link>
                                 </Grid>
@@ -141,6 +138,6 @@ export default function Login() {
                     </Box>
                 </Grid>
             </Grid>
-        </ThemeProvider>
+        
     );
 }
