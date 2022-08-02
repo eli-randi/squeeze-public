@@ -1,6 +1,6 @@
 import { ClippedDrawer } from "../Components/ClippedDrawer";
 import React, { useState, useEffect, useContext } from "react";
-import { getCredentialsFromAPI } from "../util/API";
+import { API_HOST, getCredentialsFromAPI } from "../util/API";
 import BasicTable from "../Components/Table";
 import LinkedinLogo from '../assets/LinkedIn_logo.png';
 import TwitterLogo from '../assets/Twitter-logo.png'
@@ -63,7 +63,7 @@ export function Credentials() {
             row.can_refresh ?
                 <IconButton
                     aria-label="refresh"
-                    onClick={(e) => openCredentialWindow(row.refresh_url)}
+                    onClick={(e) => openCredentialWindow(API_HOST + row.refresh_url)}
                 >
                             <RefreshIcon />
                 </IconButton > :

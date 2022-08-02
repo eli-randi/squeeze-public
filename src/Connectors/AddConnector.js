@@ -6,7 +6,7 @@ import { MetaContext } from "../Components/Auth";
 import { find } from "lodash";
 import { openCredentialWindow, prettifySnakeCase } from "../util/Utils";
 import { ErrorContext } from "../Components/Error";
-import { APIGet, APIPost } from "../util/API";
+import { APIGet, APIPost, API_HOST } from "../util/API";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { getConnectorIcon } from "./ConnectorIcons";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
@@ -150,7 +150,7 @@ function genericWidget(widget) {
             return <Button 
             color='secondary'
             variant='contained'
-            onClick={() => openCredentialWindow(widget.url)}> {widget.label} </Button>
+            onClick={() => openCredentialWindow(API_HOST + widget.url)}> {widget.label} </Button>
         default:
             return null;
     }
