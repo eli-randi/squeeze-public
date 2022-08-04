@@ -1,10 +1,12 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+const target = process.env.DOCKER_DEVELOPMENT ? 'http://platform:8000': 'https://api.thisissqueeze.com'
+
 module.exports = function(app) {
   app.use(
     '/credentials',
     createProxyMiddleware({
-      target: 'https://api.thisissqueeze.com',
+      target: target,
       changeOrigin: true,
       cookieDomainRewrite: 'localhost'
     })
@@ -12,7 +14,7 @@ module.exports = function(app) {
   app.use(
     '/connectors',
     createProxyMiddleware({
-      target: 'https://api.thisissqueeze.com',
+      target: target,
       changeOrigin: true,
       cookieDomainRewrite: 'localhost'
     })
@@ -20,7 +22,7 @@ module.exports = function(app) {
   app.use(
     '/reporting',
     createProxyMiddleware({
-      target: 'https://api.thisissqueeze.com',
+      target: target,
       changeOrigin: true,
       cookieDomainRewrite: 'localhost'
     })
