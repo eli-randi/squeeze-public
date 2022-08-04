@@ -113,7 +113,7 @@ export function Dashboard(props) {
         } else {
             console.log('submitted edit')
             APIPost(`/reporting/edit_dashboard/${props.dashboardId}`, body, errorContext).then((resp) => {
-                APIPost(`reporting/update_dashboard/${props.dashboardId}`, {}, errorContext ).then(() => setIsPendingSubmit(false));
+                APIPost(`/reporting/update_dashboard/${props.dashboardId}`, {}, errorContext ).then(() => setIsPendingSubmit(false));
             })
         }
     }
