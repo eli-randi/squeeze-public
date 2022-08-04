@@ -11,7 +11,7 @@ import { Credentials } from './Credentials/Credentials';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { MetaProvider, RequireAuth } from './Components/Auth';
 import ErrorSnackbar, { ErrorProvider } from './Components/Error';
-import { Dashboards } from './Dashboards/Dashboard';
+import { DashboardList } from './Dashboards/DashboardList';
 import { AddDashboard } from './Dashboards/AddDashboard';
 import { BasicSpeedDial } from './Components/SpeedDial'
 import { SelectConnector } from './Connectors/SelectConnector';
@@ -75,7 +75,7 @@ function App() {
                 />
                 <Route path='/dashboards' element={
                   <RequireAuth>
-                    <Dashboards />
+                    <DashboardList />
                     <BasicSpeedDial />
                   </RequireAuth>
                 }

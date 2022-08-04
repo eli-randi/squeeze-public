@@ -80,6 +80,83 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
+
+// function descendingComparator(a, b, orderBy) {
+//     if (b[orderBy] < a[orderBy]) {
+//       return -1;
+//     }
+//     if (b[orderBy] > a[orderBy]) {
+//       return 1;
+//     }
+//     return 0;
+//   }
+
+//   function getComparator(order, orderBy) {
+//     return order === 'desc'
+//       ? (a, b) => descendingComparator(a, b, orderBy)
+//       : (a, b) => -descendingComparator(a, b, orderBy);
+//   }
+
+//   // This method is created for cross-browser compatibility, if you don't
+//   // need to support IE11, you can use Array.prototype.sort() directly
+//   function stableSort(array, comparator) {
+//     const stabilizedThis = array.map((el, index) => [el, index]);
+//     stabilizedThis.sort((a, b) => {
+//       const order = comparator(a[0], b[0]);
+//       if (order !== 0) {
+//         return order;
+//       }
+//       return a[1] - b[1];
+//     });
+//     return stabilizedThis.map((el) => el[0]);
+//   }
+
+// function EnhancedTableHead(props) {
+//     const { order, orderBy, onRequestSort } =
+//       props;
+//     const createSortHandler = (property) => (event) => {
+//       onRequestSort(event, property);
+//     };
+  
+//     return (
+//       <TableHead>
+//         <TableRow>
+//           <TableCell padding="checkbox">
+//           </TableCell>
+//              {Object.entries(headlines).map((headline) => {
+//              return <TableCell 
+//                      key={headline} 
+                        // align="left">{headline[1]}</TableCell>
+//                })}
+//           {headCells.map((headCell) => (
+//             <TableCell
+//               key={headCell.id}
+//               align={headCell.numeric ? 'right' : 'left'}
+//               padding={headCell.disablePadding ? 'none' : 'normal'}
+//               sortDirection={orderBy === headCell.id ? order : false}
+//             >
+//               <TableSortLabel
+//                 active={orderBy === headCell.id}
+//                 direction={orderBy === headCell.id ? order : 'asc'}
+//                 onClick={createSortHandler(headCell.id)}
+//               >
+//                 {headCell.label}
+//                 {orderBy === headCell.id ? (
+//                   <Box component="span" sx={visuallyHidden}>
+//                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+//                   </Box>
+//                 ) : null}
+//               </TableSortLabel>
+//             </TableCell>
+//           ))}
+//         </TableRow>
+//       </TableHead>
+//     );
+//   }
+  
+
+
+
 export default function BasicTable(props) {
     let rows = props.rows;
     let headlines = props.headlines;
@@ -89,12 +166,21 @@ export default function BasicTable(props) {
 
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(props.disablePagination ? -1 : 10);
-    const [searched, setSearched] = useState('')
+    const [rowsPerPage, setRowsPerPage] = React.useState(props.disablePagination ? -1 : 50);
+    const [searched, setSearched] = useState('');
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState(headlines[0]);
 
     const handleSearchInput = (e) => {
         setSearched(e.target.value);
     }
+
+    const handleRequestSort = (event, property) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
+
 
 
     const handleChangePage = (event, newPage) => {
@@ -124,11 +210,11 @@ export default function BasicTable(props) {
     }
 
     const renderLoading = () => {
-        return [...Array(5)].map((i) => 
-            
+        return [...Array(5)].map((i) =>
+
             <TableRow key={i}>
                 <TableCell colSpan={headlines.length} px={3}>
-                    <Skeleton animation="wave" sx={{height: 40}}/>
+                    <Skeleton animation="wave" sx={{ height: 40 }} />
                 </TableCell>
             </TableRow>
         )
@@ -151,7 +237,7 @@ export default function BasicTable(props) {
                 alignItems="center">
                 <Grid item xs={6}
                 >
-                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white'}}>
+                    <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white' }}>
                         {title}
                     </Typography>
                 </Grid>
@@ -159,20 +245,28 @@ export default function BasicTable(props) {
                     {searchIsTrue ? <CustomizedInputBase handleSearchInput={handleSearchInput} /> : null}
                 </Grid>
             </Grid>
-            <TableContainer sx={{ height: 380, 
-            '&::-webkit-scrollbar': {
-                width: '10px'
-              },
-              '&::-webkit-scrollbar-track': {
-                boxShadow: 'inset 0 0 6px rgba(120,0,0,0.00)',
-                webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: 'rgba(55,50,52, 0.8)',
-                borderRadius: '5px'
-              }
+            <TableContainer sx={{
+                height: 380,
+                '&::-webkit-scrollbar': {
+                    width: '10px'
+                },
+                '&::-webkit-scrollbar-track': {
+                    boxShadow: 'inset 0 0 6px rgba(120,0,0,0.00)',
+                    webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'rgba(55,50,52, 0.8)',
+                    borderRadius: '5px'
+                }
             }}>
                 <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+
+                    {/*             <EnhancedTableHead
+                                        order={order}
+                                        orderBy={orderBy}
+                                        onRequestSort={handleRequestSort}
+                                        headlines = {headlines}
+            />*/}
 
                     <TableHead>
                         <TableRow key='headlines'>
@@ -183,10 +277,10 @@ export default function BasicTable(props) {
                     </TableHead>
                     <TableBody>
                         {
-                            props.isLoading && renderLoading()                        
+                            props.isLoading && renderLoading()
                         }
                         {
-                            !props.isLoading && rowsToRender.length === 0 && 
+                            !props.isLoading && rowsToRender.length === 0 &&
                             <TableRow>
                                 <TableCell
                                     colSpan={headlines.length}
@@ -197,36 +291,38 @@ export default function BasicTable(props) {
                             </TableRow>
                         }
                         {
-                            rowsToRender.map(
-                                row => {
-                                    let out = [];
-                                    for (let i = 0; i < renderFunctions.length; i++) {
-                                        out.push(
-                                            <TableCell component="th" scope="row" sx={props.columnStyle && props.columnStyle[i] }>
-                                                {renderFunctions[i](row)}
-                                            </TableCell>
+                            // {stableSort(rows, getComparator(order, orderBy))
+                            rowsToRender
+                                .map(
+                                    row => {
+                                        let out = [];
+                                        for (let i = 0; i < renderFunctions.length; i++) {
+                                            out.push(
+                                                <TableCell component="th" scope="row" sx={props.columnStyle && props.columnStyle[i]}>
+                                                    {renderFunctions[i](row)}
+                                                </TableCell>
+                                            )
+                                        }
+                                        return (
+                                            <TableRow
+                                                hover
+                                                onClick={() => props.rowOnClick && props.rowOnClick(row)}
+                                                key={row.id}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                {out}
+                                            </TableRow>
                                         )
                                     }
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick = {() => props.rowOnClick && props.rowOnClick(row)}
-                                            key={row.id}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            {out}
-                                        </TableRow>
-                                    )
-                                }
-                            )
+                                )
                         }
 
                     </TableBody>
                 </Table>
             </TableContainer>
             {
-                !props.disablePagination && 
-                <TablePagination 
+                !props.disablePagination &&
+                <TablePagination
                     rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
                     colSpan={3}
                     count={searchedRows.length}
@@ -244,7 +340,7 @@ export default function BasicTable(props) {
                     ActionsComponent={TablePaginationActions}
                 />
             }
-            
+
         </Paper >
     );
 }
