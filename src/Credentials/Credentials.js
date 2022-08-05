@@ -15,6 +15,8 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from "@mui/material";
 import ErrorContext from '../Components/Error'
 import { openCredentialWindow } from "../util/Utils";
+import Modal from "../Components/Modal";
+import { Connectors } from "../Connectors/Connectors";
 
 
 const CredentialHeads = [['Description', 'description'], ['Connector Type', 'type'], ['Refresh', 'can_refresh']]
@@ -35,6 +37,8 @@ const ColumnStyle = [{ width: '50%' }, { width: '35%' }, { width: '15%' }]
 export function Credentials() {
     const errorContext = useContext(ErrorContext)
     const [isLoading, setIsLoading] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
+    const [credentialInfo, setCredentialInfo] = useState(null)
 
     const renderDescription = (row) => row.description;
     const renderType = (row) => {
@@ -65,40 +69,59 @@ export function Credentials() {
                     aria-label="refresh"
                     onClick={(e) => openCredentialWindow(API_HOST + row.refresh_url)}
                 >
-                            <RefreshIcon />
+                    <RefreshIcon />
                 </IconButton > :
-    null
+                null
         )
-}
-
-const CredentialFunctions = [renderDescription, renderType, renderRefresh]
-
-const [credentials, setCredentials] = useState([])
-
-useEffect(() => {
-    getCredentialsFromAPI(errorContext).then((resp) => {
-        setCredentials(resp);
-        setIsLoading(false);
-    })
-}, [errorContext])
+    }
 
 
-return (
-    <ClippedDrawer>
-        <BasicTable
-            rows={credentials}
-            title='Credentials List'
-            headlines={CredentialHeads}
-            icons={CredentialIcons}
-            renderFunctions={CredentialFunctions}
-            search={true}
-            searchKey={(row) => row.description}
-            columnStyle={ColumnStyle}
-            isLoading={isLoading}
-        />
-    </ClippedDrawer>
+    const CredentialFunctions = [renderDescription, renderType, renderRefresh]
+
+    const [credentials, setCredentials] = useState([])
+
+    useEffect(() => {
+        getCredentialsFromAPI(errorContext).then((resp) => {
+            setCredentials(resp);
+            setIsLoading(false);
+        })
+    }, [errorContext])
+
+    function rowOnClick(credential) {
+        setOpenModal(true);
+        setCredentialInfo(credential)
+    }
+
+    const handleClose = (e) => {
+        setOpenModal(false);
+        setCredentialInfo(null);
+    }
+
+    return (
+        <ClippedDrawer>
+            <BasicTable
+                rows={credentials}
+                title='Credentials List'
+                headlines={CredentialHeads}
+                icons={CredentialIcons}
+                renderFunctions={CredentialFunctions}
+                search={true}
+                searchKey={(row) => row.description}
+                columnStyle={ColumnStyle}
+                isLoading={isLoading}
+                rowOnClick={rowOnClick}
+            />
+            <Modal
+                open={openModal}
+                handleClose={handleClose}
+            >
+                <Connectors
+                    credentialInfo={credentialInfo}
+                />
+            </Modal>
+        </ClippedDrawer>
 
 
 
-)
+    )
 }

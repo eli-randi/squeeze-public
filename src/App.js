@@ -16,6 +16,7 @@ import { AddDashboard } from './Dashboards/AddDashboard';
 import { BasicSpeedDial } from './Components/SpeedDial'
 import { SelectConnector } from './Connectors/SelectConnector';
 import { AddConnector } from './Connectors/AddConnector';
+import { ConnectorsList } from './Connectors/ConnectorsList';
 
 const theme = createTheme(
   {
@@ -61,7 +62,7 @@ function App() {
                 <Route path='/' element={<Login />} />
                 <Route path='/home' element={
                   <RequireAuth>
-                    <Connectors />
+                    <ConnectorsList />
                     <BasicSpeedDial />
                   </RequireAuth>
                 }

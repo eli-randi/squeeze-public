@@ -83,8 +83,9 @@ const renderWorkflowDuration = (workflow) => workflow.estimated_duration;
 
 const WorkflowFunctions = [renderWorkflowStatus, renderWorkflowStarted, renderWorkflowFinished, renderWorkflowDuration]
 
-export function Connectors() {
+export function Connectors(props) {
 
+    const credentialInfo = props.credentialInfo ? props.credentialInfo : null
     const errorContext = useContext(ErrorContext)
     const [openModal, setOpenModal] = useState(false);
     const [isLoading, setisLoading] = useState(true);
@@ -113,8 +114,14 @@ export function Connectors() {
     useEffect(() => {
         if (isLoading) {
             getConnectorsFromAPI(errorContext).then((resp) => {
-                setConnectors(resp);
-                setisLoading(false);
+                if(credentialInfo) {
+                    const response = resp.filter(connector => connector.credential_id === credentialInfo.id);
+                    setConnectors(response)
+                    setisLoading(false);
+                } else {
+                    setConnectors(resp);
+                    setisLoading(false);
+                }
             })
         }
     }, [isLoading, errorContext])
@@ -172,8 +179,8 @@ export function Connectors() {
 
 
     return (
-        <ClippedDrawer>
-            <BasicTable
+        <>
+        <BasicTable
                 rows={connectors}
                 title='Connectors List'
                 headlines={ConnectorHeads}
@@ -182,7 +189,7 @@ export function Connectors() {
                 searchKey={(row) => row.name}
                 columnStyle={ColumnStyle}
                 isLoading={isLoading}
-                rowOnClick={rowOnClick}
+                rowOnClick={credentialInfo ? null : rowOnClick}
             />
             <Modal
                 title={getModalTitle()}
@@ -200,8 +207,7 @@ export function Connectors() {
                     disablePagination={true}
                 />
             </Modal>
-        </ClippedDrawer>
-
+        </>
     )
 }
 
