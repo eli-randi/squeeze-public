@@ -110,6 +110,7 @@ export function DashboardList() {
                 initialState = {dashboardInfo && dashboardInfo.configuration.data.chart_groups}
                 dashboardName = {dashboardInfo && dashboardInfo.dashboard_name}
                 dashboardId = {dashboardInfo && dashboardInfo.id}
+                onSubmit = {() => setIsLoading(true)}
                 />
             </Modal>
         </ClippedDrawer>

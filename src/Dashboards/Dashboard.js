@@ -18,6 +18,7 @@ import { prettifySnakeCase } from '../util/Utils'
 
 export function Dashboard(props) {
 
+    const onSubmit = props.onSubmit || (() => {})
     const [dashboardName, setDashboardName] = useState(props.dashboardName || '');
     const [tabFormField, setTabFormField] = useState(props.initialState || [{ type: '', info: { connector_id: '' } }]);
 
@@ -113,7 +114,11 @@ export function Dashboard(props) {
         } else {
             console.log('submitted edit')
             APIPost(`/reporting/edit_dashboard/${props.dashboardId}`, body, errorContext).then((resp) => {
-                APIPost(`/reporting/update_dashboard/${props.dashboardId}`, {}, errorContext ).then(() => setIsPendingSubmit(false));
+                APIPost(`/reporting/update_dashboard/${props.dashboardId}`, {}, errorContext ).then(
+                    () => {
+                        setIsPendingSubmit(false);
+                        onSubmit();
+                    });
             })
         }
     }
@@ -137,7 +142,7 @@ export function Dashboard(props) {
                         <Grid item xs={12}
                         >
                             <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'common.white' }}>
-                                {props.dashboardInfo ? props.dashboardInfo.dashboard_name : 'Add dashboard'}
+                                {props.dashboardName ? 'Update dashboard' : 'Add dashboard'}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -298,6 +303,7 @@ export function Dashboard(props) {
                     container
                     direction='column'
                     justifyContent='center'
+                    alignItems='center'
                     alignContent='center'
                 >
                     <Grid item>
@@ -308,7 +314,7 @@ export function Dashboard(props) {
                     </Grid>
                     <Grid item>
                         <Typography variant="h6" noWrap sx={{ textAlign: 'left', color: 'primary.main' }}>
-                            Your dashboard is being created...
+                            {props.dashboardName ? 'Your dashboard is being updated...' : 'Your dashboard is being created...'}
                         </Typography>
                     </Grid>
                 </Grid>
