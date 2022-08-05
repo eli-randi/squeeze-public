@@ -177,6 +177,7 @@ export function Dashboard(props) {
                                 return (
                                     <Grid
                                         item
+                                        textAlign={'left'}
                                     >
                                         <Grid
                                             container
@@ -281,14 +282,16 @@ export function Dashboard(props) {
                             }
                             )
                             }
-                            <Grid item>
+                            <Grid item
+                            textAlign={'left'}>
                                 {tabNumber < meta.maximumDashboards ?
-                                    <Button onClick={addTab}>Add More..</Button> :
+                                    <Button onClick={addTab}>Add More Tabs</Button> :
                                     <p>Maximum tabs reached</p>
                                 }
 
                             </Grid>
-                            <Grid item>
+                            <Grid item
+                            margin={'auto'}>
                                 {/* controls */}
                                 <Button type='submit' variant='contained'>Submit</Button>
                             </Grid>

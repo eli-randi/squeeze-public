@@ -31,19 +31,18 @@ export default function Modal(props) {
           alignItems="center"
           pb={1}
           px={2}>
-          {props.deleteFunction ? 
-            <Grid item>
-            <DialogActions>
-              {props.deleteFunction}
-            </DialogActions>
-          </Grid>
-           : null }
-          
           <Grid item>
             <DialogActions>
               <Button variant='contained' onClick={props.handleClose}>Close</Button>
             </DialogActions>
           </Grid>
+          {props.deleteFunction ?
+            <Grid item>
+              <DialogActions>
+                {props.deleteFunction}
+              </DialogActions>
+            </Grid>
+            : null}
         </Grid>
       </Dialog>
     </React.Fragment>

@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Modal from '../Components/Modal';
 import { Dashboard } from './Dashboard';
 import { Grid } from '@mui/material';
+import { PageTitle } from '../util/Utils';
 
 const renderDashboardName = (row) => row.dashboard_name
 
@@ -90,9 +91,11 @@ export function DashboardList() {
 
     return (
         <ClippedDrawer>
+            <PageTitle
+            title={'Dashboards'} />
             <BasicTable
                 rows={dashboards}
-                title='Dashboards'
+                title=''
                 headlines={DashboardHeads}
                 renderFunctions={DashboardFunctions}
                 search={true}

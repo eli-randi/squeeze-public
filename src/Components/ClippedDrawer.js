@@ -32,9 +32,9 @@ export function ClippedDrawer(props) {
     })
   }
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', [`& .MuiToolbar-gutters`]: { display: 'none' } }}>
       <CssBaseline />
-      <AppBar position="fixed"
+      {/* <AppBar position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer - 1, paddingLeft: '240px', height: '90px', justifyContent: 'center' }}
       >
         <Toolbar
@@ -43,7 +43,7 @@ export function ClippedDrawer(props) {
             This is Squeeze
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Drawer
         variant="permanent"
         sx={{
@@ -60,30 +60,44 @@ export function ClippedDrawer(props) {
           container
           direction={'column'}
           justifyContent={'flex-start'}
-          
+
           height={'100%'}
-          sx={{ backgroundColor: 'secondary.dark', text: 'common.white' }}
+          sx={{
+            backgroundColor: 'secondary.dark', text: 'common.white',
+            [`& .MuiToolbar-gutters`]: { display: 'none' }
+          }}
 
         >
-          <Grid
-            item
-            height={'90px'}
-            paddingY={'5px'}
-            marginX={'auto'}
-            sx = {{[`@media screen and (max-height: 700px)`]: {
-              height: '50px'
-            }}}
-          >
-            <Link
-              to={{
-                pathname: '/home'
-              }}>
-              <img src={SqueezeLogo} 
-              height='100%' 
-              margin='auto' alt='Squeeze Logo' />
-            </Link>
+          <Link
+          style={{ textDecoration: 'none', color: '#FDCA19' }}
+            to={{
+              pathname: '/home'
+            }}>
+            <Grid
+              item
+              flexDirection={'row'}
+              display={'flex'}
+              alignItems={'center'}
+              height={'90px'}
+              paddingY={'5px'}
+              marginX={'auto'}
+              sx={{
+                [`@media screen and (max-height: 700px)`]: {
+                  height: '50px'
+                }
+              }}
+            >
+              <img src={SqueezeLogo}
+                height='100%'
+                margin='auto' alt='Squeeze Logo' />
+              <Typography variant='h6' fontSize={22}
+              >
+                Squeeze
+              </Typography>
 
-          </Grid>
+
+            </Grid>
+          </Link>
           <Grid item height={'85%'}>
             <Grid
               container
@@ -127,7 +141,10 @@ export function ClippedDrawer(props) {
         </Grid>
 
       </Drawer >
-      <Box component="main" sx={{ flexGrow: 1, p: 3, pt: '70px' }}>
+      <Box component="main" sx={{
+        flexGrow: 1, p: 3,
+        //  pt: '70px' 
+      }}>
         <Toolbar />
         {props.children}
       </Box>

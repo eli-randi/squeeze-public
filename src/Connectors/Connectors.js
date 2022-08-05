@@ -96,7 +96,6 @@ export function Connectors(props) {
     const rowOnClick = (connector) => {
         setIsLoadingConnectorInfo(true);
         let info = connector;
-        setConnectorInfo(info);
         getWorkflowsFromAPI(connector.id, errorContext).then((resp) => {
             info.workflows = resp
             setConnectorInfo(info);
@@ -182,7 +181,7 @@ export function Connectors(props) {
         <>
         <BasicTable
                 rows={connectors}
-                title='Connectors List'
+                title={credentialInfo ? 'Connectors List' : ''}
                 headlines={ConnectorHeads}
                 renderFunctions={ConnectorFunctions}
                 search={true}
