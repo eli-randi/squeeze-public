@@ -17,7 +17,7 @@ import ErrorContext from '../Components/Error'
 import { openCredentialWindow } from "../util/Utils";
 
 
-const CredentialHeads = ['Description', 'Connector Type', 'Refresh']
+const CredentialHeads = [['Description', 'description'], ['Connector Type', 'type'], ['Refresh', 'can_refresh']]
 
 const CredentialIcons = {
     Google: GoogleLogo,
