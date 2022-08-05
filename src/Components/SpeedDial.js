@@ -9,8 +9,7 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
 export function BasicSpeedDial() {
     const [openSpeedDial, setOpenSpeedDial] = useState(false);
-    const handleSpeedDialOpen = () => setOpenSpeedDial(true);
-    const handleSpeedDialClose = () => setOpenSpeedDial(false);
+    const handleSpeedDialOpen = () => setOpenSpeedDial(!openSpeedDial);
 
     const navigate = useNavigate();
 
@@ -21,8 +20,7 @@ export function BasicSpeedDial() {
         sx={{ position: 'absolute', bottom: 32, right: 32 }}
         icon={<SpeedDialIcon />}
         open={openSpeedDial}
-        onOpen={handleSpeedDialOpen}
-        onClose={handleSpeedDialClose}
+        onClick={handleSpeedDialOpen}
       > 
           <SpeedDialAction
             key={'add-dashboard'}

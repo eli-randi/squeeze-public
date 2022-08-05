@@ -13,8 +13,10 @@ import AlertModal from "../Components/AlertModal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ErrorContext } from "../Components/Error";
 import { getConnectorIcon } from "./ConnectorIcons";
+import MouseOverPopover from "../util/Utils";
+import { formatTime } from "../util/Utils";
 
-const ConnectorHeads = ['Connector Name', 'Type', 'Created', 'Status'];
+const ConnectorHeads = [['Connector Name', 'name'], ['Type', 'type'], ['Created', 'created_at'], ['Status', 'active']];
 
 const ColumnStyle = [{ width: '30%' }, { width: '30%' }, { width: '25%' }, { width: '15%' }]
 
@@ -27,11 +29,11 @@ const renderType = (row) => {
             direction="row"
             justifyContent="flex-start"
             alignItems="center">
-                <Grid item>
-                    <img src={getConnectorIcon(row.type)}
-                        style={{ width: 40 }}
-                        alt="Social Media Logo" />
-                </Grid>
+            <Grid item>
+                <img src={getConnectorIcon(row.type)}
+                    style={{ width: 40 }}
+                    alt="Social Media Logo" />
+            </Grid>
             <Grid item>
                 {row.label}
             </Grid>
@@ -61,13 +63,22 @@ const WorkflowStatusOptions = {
 
 const ConnectorFunctions = [renderName, renderType, renderCreated, renderActive]
 
-const WorkflowHeads = ['Status', 'Started', 'Finished', 'Duration'];
+const WorkflowHeads = [['Status', 'phase'], ['Started', 'started_at'], ['Finished', 'finished_at'], ['Estimated Duration', 'estimated_duration']];
 
 const renderWorkflowStatus = (workflow) => {
     return WorkflowStatusOptions[workflow.phase]
 };
-const renderWorkflowStarted = (workflow) => workflow.started_at;
-const renderWorkflowFinished = (workflow) => workflow.finished_at;
+const renderWorkflowStarted = (workflow) =>
+    < MouseOverPopover
+        mainText={moment(workflow.started_at).fromNow()}
+        popoverText={formatTime(workflow.started_at)}
+    />;
+const renderWorkflowFinished = (workflow) => 
+< MouseOverPopover
+        mainText={moment(workflow.finished_at).from(workflow.started_at)}
+        popoverText={formatTime(workflow.finished_at)}
+    />;
+
 const renderWorkflowDuration = (workflow) => workflow.estimated_duration;
 
 const WorkflowFunctions = [renderWorkflowStatus, renderWorkflowStarted, renderWorkflowFinished, renderWorkflowDuration]
@@ -120,12 +131,12 @@ export function Connectors() {
                     <Grid item>
                         {connectorInfo.name}
                     </Grid>
-                        <Grid item>
-                            <img src={getConnectorIcon(connectorInfo.type)}
-                                style={{ width: 40 }}
-                                alt="Social Media Logo"
-                            />
-                        </Grid>
+                    <Grid item>
+                        <img src={getConnectorIcon(connectorInfo.type)}
+                            style={{ width: 40 }}
+                            alt="Social Media Logo"
+                        />
+                    </Grid>
                 </Grid>
             )
         }

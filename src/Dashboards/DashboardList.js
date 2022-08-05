@@ -44,7 +44,8 @@ export function DashboardList() {
 
     let errorContext = useContext(ErrorContext);
 
-    const DashboardHeads = ['Name', 'Created', 'Link']
+    const DashboardHeads = [['Name', 'dashboard_name'], ['Created', 'created_at'], ['Link', 'url']]
+    console.log(DashboardHeads)
 
     const rowOnClick = (dashboard) => {
         setDashboardInfo(dashboard);

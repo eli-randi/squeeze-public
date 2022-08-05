@@ -16,6 +16,7 @@ import { AddDashboard } from './Dashboards/AddDashboard';
 import { BasicSpeedDial } from './Components/SpeedDial'
 import { SelectConnector } from './Connectors/SelectConnector';
 import { AddConnector } from './Connectors/AddConnector';
+import { DashboardList } from './Dashboards/DashboardList';
 
 const theme = createTheme(
   {
