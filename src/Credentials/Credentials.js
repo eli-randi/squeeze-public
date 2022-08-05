@@ -14,7 +14,7 @@ import { Grid } from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from "@mui/material";
 import ErrorContext from '../Components/Error'
-import { openCredentialWindow } from "../util/Utils";
+import { openCredentialWindow, PageTitle } from "../util/Utils";
 import Modal from "../Components/Modal";
 import { Connectors } from "../Connectors/Connectors";
 
@@ -99,9 +99,12 @@ export function Credentials() {
 
     return (
         <ClippedDrawer>
+            <PageTitle 
+            title={'Credentials'}
+            />
             <BasicTable
                 rows={credentials}
-                title='Credentials List'
+                title=''
                 headlines={CredentialHeads}
                 icons={CredentialIcons}
                 renderFunctions={CredentialFunctions}

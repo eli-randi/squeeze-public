@@ -83,3 +83,11 @@ export default function MouseOverPopover(props) {
 export function formatTime (time) {
     return time.replace('Z', '').replace('T', ' ');
 }
+
+export const PageTitle = (props) => {
+    return (
+        <Typography variant="h6" fontSize={24} align="left" marginLeft={3} marginTop={2} marginBottom={4}>
+                {props.title}
+        </Typography>
+    )
+}

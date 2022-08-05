@@ -220,12 +220,14 @@ export default function BasicTable(props) {
 
 
     return (
-        <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
+        <Paper 
+        sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
             <Grid
                 sx={{
-                    backgroundColor: 'secondary.main'
+                    backgroundColor: 'primary.main'
                 }}
                 spacing={2}
+                
                 pl={5}
                 pr={2}
                 py={1.5}
@@ -244,7 +246,7 @@ export default function BasicTable(props) {
                 </Grid>
             </Grid>
             <TableContainer sx={{
-                height: 380,
+                maxHeight: 550,
                 '&::-webkit-scrollbar': {
                     width: '10px'
                 },

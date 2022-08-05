@@ -106,6 +106,7 @@ function APIChoiceField(props) {
             <Grid
                 item
                 xs={1}
+                alignSelf={'center'}
             >
                 <IconButton
                     onClick={() => setAPIChoices(null)}>
@@ -238,6 +239,7 @@ export const AddConnector = () => {
                     >
                         <Grid
                             item
+                            textAlign={'left'}
                         >
                             <Grid
                                 container
