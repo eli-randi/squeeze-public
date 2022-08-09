@@ -116,7 +116,6 @@ function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort, headlines } =
         props;
     const createSortHandler = (property) => (event) => {
-        console.log(property)
         onRequestSort(event, property);
     };
 
@@ -158,7 +157,6 @@ function EnhancedTableHead(props) {
 export default function BasicTable(props) {
     let rows = props.rows;
     let headlines = props.headlines;
-    console.log(headlines)
     let searchIsTrue = props.search;
     let title = props.title;
     let renderFunctions = props.renderFunctions;

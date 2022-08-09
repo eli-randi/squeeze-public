@@ -76,7 +76,6 @@ export const SelectConnector = () => {
                     height={500}
                 >
                     {connectorsToRender.map((connector) => {
-                        console.log(connector.name)
                         return (
                             <Grid item>
                                <Card sx={{ width: 340 }}>

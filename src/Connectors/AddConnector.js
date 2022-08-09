@@ -165,7 +165,6 @@ export const AddConnector = () => {
     const navigate = useNavigate();
 
     const connectorConfig = find(meta.fullMeta.connectors, ((connector) => connector.name === connectorType));
-    console.log(connectorConfig.extra_widgets)
     const fields = connectorConfig.fields;
     const widgets = connectorConfig.extra_widgets ? connectorConfig.extra_widgets : [];
 

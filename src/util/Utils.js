@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export function prettifySnakeCase(str) {
     return str
+        .toString()
         .split('_')
         .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
         .join(' ');
