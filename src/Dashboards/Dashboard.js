@@ -104,15 +104,12 @@ export function Dashboard(props) {
                 chart_groups: tabFormField
             }
         }
-        console.log(body)
         if(!props.dashboardId) {
           APIPost('/reporting/create_dashboard', body, errorContext).then((resp) => {
-            console.log(resp)
             setIsPendingSubmit(false);
             navigate('/dashboards');
         })  
         } else {
-            console.log('submitted edit')
             APIPost(`/reporting/edit_dashboard/${props.dashboardId}`, body, errorContext).then((resp) => {
                 APIPost(`/reporting/update_dashboard/${props.dashboardId}`, {}, errorContext ).then(
                     () => {
@@ -250,7 +247,6 @@ export function Dashboard(props) {
                                             </Grid>
                                         {typeConfig[form.type] && 
                                             typeConfig[form.type].map((extraField) => {
-                                                console.log(typeConfig[form.type])
                                                 return (
                                                     <Grid item>
                                                         <TextField
