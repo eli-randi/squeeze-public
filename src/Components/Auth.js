@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {getMetaFromAPI} from '../util/API';
-import {useLocation, Navigate} from 'react-router-dom';
+import {getMetaFromAPI, OAUTH_HOST} from '../util/API';
 import Loader from "./Loader";
 import { ErrorContext } from "./Error";
 
@@ -29,24 +28,33 @@ export function MetaProvider(props) {
         }
     }, [isLoggedIn])
 
-  return <MetaContext.Provider value={{isLoggedIn, refreshLoginFromServer, maximumDashboards, fullMeta}}>{props.children}</MetaContext.Provider>;
+  return (
+      <MetaContext.Provider
+          value={
+          {
+              isLoggedIn,
+              refreshLoginFromServer,
+              maximumDashboards,
+              fullMeta
+          }
+      }>
+          {props.children}
+      </MetaContext.Provider>
+  );
   
 }
 
 export function RequireAuth(props) {
     let auth = useContext(MetaContext);
-    let location = useLocation();
-  
+
+
     if (auth.isLoggedIn == null) {
         return <Loader/>
     }
     if (!auth.isLoggedIn) {
-      // Redirect them to the /login page, but save the current location they were
-      // trying to go to when they were redirected. This allows us to send them
-      // along to that page after they login, which is a nicer user experience
-      // than dropping them off on the home page.
-      return <Navigate to="/" state={{ from: location }} replace />;
+        return window.location.href = OAUTH_HOST + auth.fullMeta.login_url
     }
-  
+
+
     return props.children;
   }

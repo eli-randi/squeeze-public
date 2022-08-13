@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
 import './App.css';
-import {Login} from './Login/Login';
 import {
   BrowserRouter,
   Routes,
@@ -59,7 +57,14 @@ function App() {
           <MetaProvider>
             <BrowserRouter>
               <Routes>
-                <Route path='/' element={<Login />} />
+                <Route path='/' element={
+                  <RequireAuth>
+                    {/* We don't use this at the moment! */}
+                    {/*<Login />*/}
+                    <Connectors />
+                    <BasicSpeedDial />
+                  </RequireAuth>
+                } />
                 <Route path='/home' element={
                   <RequireAuth>
                     <ConnectorsList />
