@@ -3,6 +3,10 @@ import cookie from 'react-cookies';
 
 export const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3000' : 'https://api.thisissqueeze.com'
 
+// We have to work around here, because we're opening a window, so the host in this case is relative
+// to the machine, as opposed to the container the frontend is in
+export const OAUTH_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:8000' : API_HOST
+
 
 export function APIGet (url, errorContext) {
   const response = fetch(API_HOST + url, {

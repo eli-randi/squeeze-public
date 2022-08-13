@@ -27,7 +27,6 @@ module.exports = function(app) {
       cookieDomainRewrite: 'localhost'
     })
   );
-  
 };
 
 
