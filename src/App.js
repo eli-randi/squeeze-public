@@ -4,7 +4,6 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { Connectors } from './Connectors/Connectors';
 import { Credentials } from './Credentials/Credentials';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { MetaProvider, RequireAuth } from './Components/Auth';
@@ -61,7 +60,7 @@ function App() {
                   <RequireAuth>
                     {/* We don't use this at the moment! */}
                     {/*<Login />*/}
-                    <Connectors />
+                    <ConnectorsList />
                     <BasicSpeedDial />
                   </RequireAuth>
                 } />
