@@ -103,8 +103,8 @@ export function loginToAPI(username, password, errorContext) {
 
 export function logoutFromAPI(errorContext) {
   return APIPost('/connectors/logout', null, errorContext).then((response) => {
-    return response.ok
-  })
+    return response.json()
+  }).then((response) => response.data.logout_url)
 }
 
 export function deleteConnectorFromAPI(id, errorContext) {

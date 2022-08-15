@@ -12,23 +12,19 @@ import { LinkedToolbarItem, ButtonToolbarItem } from './ToolbarItem';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logoutFromAPI } from '../util/API';
-import { MetaContext } from './Auth';
 import ErrorContext from './Error';
 import { Grid } from '@mui/material';
 import SqueezeLogo from './SqueezeLogo.png'
-import { Link } from 'react-router-dom';
-import { wrap } from 'lodash';
+import { Link} from 'react-router-dom';
 
 const drawerWidth = 240;
 
 export function ClippedDrawer(props) {
-  let auth = useContext(MetaContext);
-
   let errorContext = useContext(ErrorContext)
 
   const handleLogoutClick = () => {
-    logoutFromAPI(errorContext).then((_) => {
-      auth.refreshLoginFromServer();
+    logoutFromAPI(errorContext).then((logout_url) => {
+        window.location.href = logout_url
     })
   }
   return (
