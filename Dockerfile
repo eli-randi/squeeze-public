@@ -1,13 +1,17 @@
-# pull official base image
-FROM node:13.12.0-alpine
+FROM node:16.3.0-alpine
 
-COPY . /app
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm config set legacy-peer-deps true
+
+RUN npm install
+
+COPY . .
+
 ENV PATH /app/node_modules/.bin:$PATH
 
-# install app dependencies
-WORKDIR /app
-RUN npm install 
-RUN npm install react-scripts@4.0.3 -g
+EXPOSE 3000
 
-# start app
 CMD ["npm", "start"]
