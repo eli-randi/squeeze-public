@@ -2,7 +2,8 @@ import './App.css';
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 import { Credentials } from './Credentials/Credentials';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -14,6 +15,7 @@ import { BasicSpeedDial } from './Components/SpeedDial'
 import { SelectConnector } from './Connectors/SelectConnector';
 import { AddConnector } from './Connectors/AddConnector';
 import { ConnectorsList } from './Connectors/ConnectorsList';
+import Home from './pages/Home/Home';
 
 const theme = createTheme(
   {
@@ -46,68 +48,37 @@ const theme = createTheme(
   }
 );
 
-function App() {
-
-
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <ErrorProvider>
           <MetaProvider>
             <BrowserRouter>
-              <Routes>
-                <Route path='/' element={
-                  <RequireAuth>
-                    {/* We don't use this at the moment! */}
-                    {/*<Login />*/}
-                    <ConnectorsList />
-                    <BasicSpeedDial />
-                  </RequireAuth>
-                } />
-                <Route path='/home' element={
-                  <RequireAuth>
-                    <ConnectorsList />
-                    <BasicSpeedDial />
-                  </RequireAuth>
-                }
-                />
-                <Route path='/accounts' element={
-                  <RequireAuth>
-                    <Credentials />
-                    <BasicSpeedDial />
-                  </RequireAuth>
-                }
-                />
-                <Route path='/dashboards' element={
-                  <RequireAuth>
-                    <DashboardList />
-                    <BasicSpeedDial />
-                  </RequireAuth>
-                }
-                />
-                <Route path='/add_dashboard' element={
-                  <RequireAuth>
-                    <AddDashboard />
-                  </RequireAuth>
-                }
-                />
-                <Route path='/add_connector/:connectorType' element={
-                    <RequireAuth>
-                      <AddConnector />
-                    </RequireAuth>
+              <RequireAuth>
+                <Routes>
+                  <Route path='/home' element={<Home />} />
+                  <Route path='/accounts' element={
+                    <>
+                      <Credentials />
+                      <BasicSpeedDial />
+                    </>
                   }
                   />
-                <Route path='/add_connector' element={
-                  <RequireAuth>
-                    <SelectConnector />
-                  </RequireAuth>
-                } >
-                </Route>
-
-
-              </Routes>
+                  <Route path='/dashboards' element={
+                    <>
+                      <DashboardList />
+                      <BasicSpeedDial />
+                    </>
+                  }
+                  />
+                  <Route path='/add_dashboard' element={<AddDashboard />} />
+                  <Route path='/add_connector/:connectorType' element={<AddConnector />}/>
+                  <Route path='/add_connector' element={<SelectConnector />} />
+                  <Route path='/' element={<Navigate to='/home' replace />} />
+                </Routes>
+              </RequireAuth>
             </BrowserRouter>
-
           </MetaProvider>
           <ErrorSnackbar />
         </ErrorProvider>
@@ -117,6 +88,3 @@ function App() {
 }
 
 export default App;
-
-
-
