@@ -16,11 +16,13 @@ import ErrorContext from './Error';
 import { Grid } from '@mui/material';
 import SqueezeLogo from './SqueezeLogo.png'
 import { Link} from 'react-router-dom';
+import {MetaContext} from "./Auth";
 
 const drawerWidth = 240;
 
 export function ClippedDrawer(props) {
-  let errorContext = useContext(ErrorContext)
+  const errorContext = useContext(ErrorContext)
+  const meta = useContext(MetaContext)
 
   const handleLogoutClick = () => {
     logoutFromAPI(errorContext).then((logout_url) => {
@@ -30,16 +32,6 @@ export function ClippedDrawer(props) {
   return (
     <Box sx={{ display: 'flex', [`& .MuiToolbar-gutters`]: { display: 'none' } }}>
       <CssBaseline />
-      {/* <AppBar position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer - 1, paddingLeft: '240px', height: '90px', justifyContent: 'center' }}
-      >
-        <Toolbar
-        >
-          <Typography variant="h4" color={'common.white'} noWrap component="div" sx={{ fontWeight: 'bold' }}>
-            This is Squeeze
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Drawer
         variant="permanent"
         sx={{
@@ -86,14 +78,17 @@ export function ClippedDrawer(props) {
               <img src={SqueezeLogo}
                 height='100%'
                 margin='auto' alt='Squeeze Logo' />
-              <Typography variant='h6' fontSize={22}
-              >
-                Squeeze
-              </Typography>
-
-
+                  <Typography variant='h6' fontSize={22}
+                  >
+                    Squeeze
+                  </Typography>
             </Grid>
           </Link>
+            <Grid item >
+              <Typography sx={{color: 'common.white', fontStyle: 'italic', fontSize: 12}}>
+                Signed in as {meta?.fullMeta?.user_info?.email}
+              </Typography>
+            </Grid>
           <Grid item height={'85%'}>
             <Grid
               container
