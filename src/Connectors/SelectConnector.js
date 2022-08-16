@@ -27,7 +27,7 @@ export const SelectConnector = () => {
     }
 
     return (
-        <ClippedDrawer>
+        <>
             <BackButton
             url = {'/home'} />
             <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
@@ -92,16 +92,10 @@ export const SelectConnector = () => {
                                 </CardActionArea>
                             </Card> 
                             </Grid>
-                            
-
                         )
                     })}
                 </Grid>
-
             </Paper>
-
-        </ClippedDrawer>
-
+        </>
     )
-
 }

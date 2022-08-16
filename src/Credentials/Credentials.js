@@ -98,33 +98,27 @@ export function Credentials() {
     }
 
     return (
-        <ClippedDrawer>
-            <PageTitle 
-            title={'Credentials'}
-            />
-            <BasicTable
-                rows={credentials}
-                title=''
-                headlines={CredentialHeads}
-                icons={CredentialIcons}
-                renderFunctions={CredentialFunctions}
-                search={true}
-                searchKey={(row) => row.description}
-                columnStyle={ColumnStyle}
-                isLoading={isLoading}
-                rowOnClick={rowOnClick}
-            />
-            <Modal
-                open={openModal}
-                handleClose={handleClose}
-            >
-                <Connectors
-                    credentialInfo={credentialInfo}
-                />
-            </Modal>
-        </ClippedDrawer>
-
-
-
+        <>
+          <BasicTable
+              rows={credentials}
+              title=''
+              headlines={CredentialHeads}
+              icons={CredentialIcons}
+              renderFunctions={CredentialFunctions}
+              search={true}
+              searchKey={(row) => row.description}
+              columnStyle={ColumnStyle}
+              isLoading={isLoading}
+              rowOnClick={rowOnClick}
+          />
+          <Modal
+              open={openModal}
+              handleClose={handleClose}
+          >
+              <Connectors
+                  credentialInfo={credentialInfo}
+              />
+          </Modal>
+        </>
     )
 }

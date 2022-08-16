@@ -89,9 +89,7 @@ export function DashboardList() {
 
 
     return (
-        <ClippedDrawer>
-            <PageTitle
-            title={'Dashboards'} />
+        <>
             <BasicTable
                 rows={dashboards}
                 title=''
@@ -115,6 +113,6 @@ export function DashboardList() {
                 onSubmit = {() => setIsLoading(true)}
                 />
             </Modal>
-        </ClippedDrawer>
+        </>
     )
 }

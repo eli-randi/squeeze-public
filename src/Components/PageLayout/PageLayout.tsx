@@ -6,7 +6,7 @@ import { ClippedDrawer } from "../ClippedDrawer";
 const PageLayout : React.FC<PageLayoutProps> = ({ title, speedDial, children } ) => {
   return (
     <ClippedDrawer>
-      <PageTitle title={title} />
+      {title && <PageTitle title={title} />}
       {children}
       {speedDial && <BasicSpeedDial />}
     </ClippedDrawer>
@@ -28,7 +28,7 @@ interface PageTitleProps {
 }
 
 interface PageLayoutProps {
-  title: string;
+  title?: string;
   speedDial?: boolean;
   children: JSX.Element;
 }
