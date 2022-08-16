@@ -9,6 +9,7 @@ import Accounts from './pages/Accounts/Accounts'
 import AddConnector from "pages/AddConnector/AddConnector";
 import { theme } from "util/theme";
 import './App.css';
+import { SelectConnector } from "pages/SelectConnector/SelectConnector";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path='/add_dashboard' element={<AddDashboard />} />
                 <Route path='/add_connector/:connectorType' element={<AddConnector />}/>
                 <Route path='/add_connector' element={<AddConnector />} />
+                <Route path='/new_add_connector' element={<SelectConnector />} />
                 <Route path='/' element={<Navigate to='/home' replace />} />
               </Routes>
             </RequireAuth>

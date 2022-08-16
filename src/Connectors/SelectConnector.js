@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom"
-import { ClippedDrawer } from "../Components/ClippedDrawer";
 import { MetaContext } from "../Components/Auth";
 import { useContext, useState } from "react";
 import { Grid, Paper, Typography, Card, CardActionArea, CardContent } from "@mui/material";
