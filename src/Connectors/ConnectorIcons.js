@@ -12,7 +12,8 @@ import PinterestLogo from '../assets/Pinterest-logo.png';
 import YoutubeLogo from '../assets/Youtube-logo.png';
 import S3Logo from '../assets/S3-logo.png'
 import KlaviyoLogo from '../assets/KlaviyoLogo.svg'
-
+import OutbrainLogo from '../assets/OutbrainLogo.png'
+import AmplitudeLogo from '../assets/AmplitudeLogo.png'
 
 const ConnectorIcons = {
     google_analytics: GoogleAnalyticsLogo,
@@ -27,8 +28,9 @@ const ConnectorIcons = {
     youtube: YoutubeLogo,
     klaviyo: KlaviyoLogo,
     s3: S3Logo,
-    pinterest: PinterestLogo
-
+    pinterest: PinterestLogo,
+    outbrain_amplify: OutbrainLogo,
+    amplitude: AmplitudeLogo
 }
 
 export function getConnectorIcon (connectorType) {
