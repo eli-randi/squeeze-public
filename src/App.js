@@ -2,9 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material';
 import { MetaProvider, RequireAuth } from './Components/Auth';
 import ErrorSnackbar, { ErrorProvider } from './Components/Error';
-import { DashboardList } from './Dashboards/DashboardList';
-import { BasicSpeedDial } from './Components/SpeedDial'
-import { SelectConnector } from './Connectors/SelectConnector';
 import Home from './pages/Home/Home';
 import Dashboards from 'pages/Dashboards/Dashboards';
 import AddDashboard from "pages/AddDashboard/AddDashboard";
