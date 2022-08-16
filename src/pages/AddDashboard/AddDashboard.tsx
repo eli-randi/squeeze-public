@@ -1,5 +1,4 @@
-import React from "react";
-import { BackButton } from "util/Utils";
+import BackButton from "Components/BackButton/BackButton";
 import { Dashboard } from "Dashboards/Dashboard";
 import PageLayout from "Components/PageLayout/PageLayout";
 

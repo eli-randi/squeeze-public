@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import Modal from '../Components/Modal';
 import { Dashboard } from './Dashboard';
 import { Grid } from '@mui/material';
-import { PageTitle } from '../util/Utils';
 
 const renderDashboardName = (row) => row.dashboard_name
 

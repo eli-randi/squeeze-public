@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { Grid, Paper, Typography, Card, CardActionArea, CardContent } from "@mui/material";
 import CustomizedInputBase from "../Components/SearchBar";
 import { getConnectorIcon } from "./ConnectorIcons";
-import { BackButton } from "../util/Utils";
+import BackButton from "Components/BackButton/BackButton";
 
 export const SelectConnector = () => {
     const meta = useContext(MetaContext);
