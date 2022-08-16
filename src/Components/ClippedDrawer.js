@@ -106,9 +106,9 @@ export function ClippedDrawer(props) {
                   <Typography
                     sx={{ color: 'common.white' }}
                   >
-                    <LinkedToolbarItem text='Connectors' icon={<LinkIcon color='white' />} path='/home' />
-                    <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon color='white' />} path='/accounts' />
-                    <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon color='white' />} path='/dashboards' />
+                    <LinkedToolbarItem text='Connectors' icon={<LinkIcon />} path='/home' />
+                    <LinkedToolbarItem text='Credentials' icon={<VpnKeyIcon />} path='/accounts' />
+                    <LinkedToolbarItem text='Dashboards' icon={<DashboardIcon />} path='/dashboards' />
                   </Typography>
                 </List>
               </Grid>
@@ -121,7 +121,7 @@ export function ClippedDrawer(props) {
                   >
                     <ButtonToolbarItem
                       text='Log out'
-                      icon={<LogoutIcon color='white' />}
+                      icon={<LogoutIcon htmlColor='#fff' />}
                       handleClick={handleLogoutClick}
                     />
                   </Typography>
