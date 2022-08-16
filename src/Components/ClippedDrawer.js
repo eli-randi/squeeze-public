@@ -13,7 +13,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logoutFromAPI } from '../util/API';
 import ErrorContext from './Error';
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import SqueezeLogo from './SqueezeLogo.png'
 import { Link} from 'react-router-dom';
 import {MetaContext} from "./Auth";
