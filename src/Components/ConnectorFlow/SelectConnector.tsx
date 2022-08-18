@@ -4,7 +4,6 @@ import React, { useContext, useRef, useState } from "react";
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { Button } from "@mui/material";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 import CustomizedInputBase from "../SearchBar";
 import { getConnectorIcon } from "../../util/ConnectorIcons";
 
@@ -20,8 +19,7 @@ import { Widget } from "./Fields/Widget";
 const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void }> = ({ selectConnectorType }) => {
   const meta = useContext(MetaContext);
   const [searched, setSearched] = useState('');
-  //@ts-ignore
-  const handleSearchInput = (e) => {
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearched(e.target.value);
   }
 
@@ -104,14 +102,17 @@ const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string 
 
 
 
-const ConnectorDetails: React.FC<{ fieldsToRender: any, onSubmit: (event: React.FormEvent) => void, onBackClick: () => void }> =
-  ({ fieldsToRender, onSubmit, onBackClick }) => {
+const ConnectorDetails: React.FC<{
+  fieldsToRender: any,
+  onSubmit: (event: React.FormEvent) => void,
+  onBackClick: () => void,
+  connectorTypeLabel: string
+}> = ({ fieldsToRender, onSubmit, onBackClick, connectorTypeLabel }) => {
     const navigate = useNavigate();
 
     return (
-      //@ts-ignore
       <div className="CreateDashboard">
-        <h1>Add your connector</h1>
+        <h1>Create your {connectorTypeLabel} connector</h1>
         <div className="BackButton">
           <Button
             color="secondary"
@@ -123,14 +124,6 @@ const ConnectorDetails: React.FC<{ fieldsToRender: any, onSubmit: (event: React.
           </Button>
         </div>
         <div className="CreateDashboardComponent">
-          {/* <Button
-            color="primary"
-            variant="contained"
-            className="SkipButton"
-            onClick={() => navigate('/home')}>
-            Optional add a dashboard
-            <SkipNextIcon />
-          </Button> */}
           {fieldsToRender}
           <Button
             color="primary"
@@ -266,6 +259,7 @@ export const SelectConnector = () => {
 
   } else if (step === 2) {
     currentStepComponent = <ConnectorDetails
+      connectorTypeLabel={connectorConfig.current.label}
       fieldsToRender={fieldsToRender}
       onSubmit={handleSubmit}
       onBackClick={onBackClick}
