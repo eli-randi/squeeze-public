@@ -1,0 +1,8 @@
+.AddConnectorPortalPage {
+  max-width: 80vw;
+  height: calc(100vh - 48px);
+}
+
+.ClippedDrawerAddConnector {
+  padding: 0;
+}

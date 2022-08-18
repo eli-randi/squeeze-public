@@ -1,8 +1,13 @@
 .CreateConnectorPage {
   background-color: #F0F0F0;
   padding: 0% 10%;
-  height: 100vh;
+  min-height: 100vh;
   font-family:  'Rubik', 'sans serif';
+}
+
+.CreateConnectorPortal {
+  padding: 0%;
+  min-height: 90vh;
 }
 
 .ConnectorSearchBar {
@@ -73,13 +78,75 @@ a {
   border-radius: 5px;
 }
 
+.BackButton {
+  position: absolute;
+  left: 50px;
+  top: 30px;
+}
+
+.SkipButton {
+  align-self: flex-end;
+  width: 30%
+}
+
+.CredentialChoice {
+  margin: 0% 15%;
+}
+
+.CredentialComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 40vh;
+}
+
+.CredentialComponentWidgetOnly {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 20vh;
+}
+
+.CredentialComponent p {
+  text-align: left;
+}
+
+.CreateDashboard {
+  margin: 0% 15%;
+}
+
+.CreateDashboardComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60vh;
+}
+
+
+@media (max-width: 800px) {
+  .BackButton {
+    position: relative;
+    align-self: flex-start;
+    top: 0;
+    left: 0;
+  }
+  .SkipButton {
+    width: 50%;
+  }
+  .CreateDashboardComponent {
+    margin-top: 20px;
+  }
+}
 
 @media (max-width: 600px) {
   .ConnectorTiles {
     margin: 5% 5%;
     grid-template-columns: 50% 50%;
   }
-  
+  .SkipButton {
+    width: 60%
+  }
 }
 
 @media (max-width: 1200px) and (min-width: 600px) {

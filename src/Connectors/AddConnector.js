@@ -221,7 +221,7 @@ export const AddConnector = () => {
   function handleSubmit(event) {
     event.preventDefault();
     const submitUrl = connectorConfig.submit_url;
-    APIPost(submitUrl, formData, errorContext).then((_) => navigate("/home"));
+    APIPost(submitUrl, formData, errorContext).then(() => navigate("/home"));
   }
 
   return (

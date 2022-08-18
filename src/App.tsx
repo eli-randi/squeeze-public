@@ -23,9 +23,9 @@ const App = () => {
                 <Route path='/accounts' element={<Accounts />}/>
                 <Route path='/dashboards' element={<Dashboards />}/>
                 <Route path='/add_dashboard' element={<AddDashboard />} />
-                <Route path='/add_connector/:connectorType' element={<AddConnector />}/>
+                {/* <Route path='/add_connector/:connectorType' element={<AddConnector />}/> */}
                 <Route path='/add_connector' element={<AddConnector />} />
-                <Route path='/new_add_connector' element={<SelectConnector />} />
+                <Route path='/new_add_connector' element={<SelectConnector className={'CreateConnectorPage'}/>} />
                 <Route path='/' element={<Navigate to='/home' replace />} />
               </Routes>
             </RequireAuth>
