@@ -1,8 +1,9 @@
 .CreateConnectorPage {
   background-color: #F0F0F0;
   padding: 0% 10%;
-  min-height: 100vh;
+  height: 100%;
   font-family:  'Rubik', 'sans serif';
+  position: relative;
 }
 
 .CreateConnectorPortal {
@@ -76,6 +77,11 @@ a {
 ::-webkit-scrollbar-thumb {
   background: rgba(247, 169, 0, 0.8);
   border-radius: 5px;
+}
+
+.CreateConnectorPortal .BackButton {
+  position: absolute;
+  left: 300px
 }
 
 .BackButton {

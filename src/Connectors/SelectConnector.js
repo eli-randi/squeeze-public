@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { MetaContext } from "../Components/Auth";
+import { MetaContext } from "../Components/Providers/Auth";
 import { useContext, useState } from "react";
 import { Grid, Paper, Typography, Card, CardActionArea, CardContent } from "@mui/material";
 import CustomizedInputBase from "../Components/SearchBar";

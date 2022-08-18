@@ -13,9 +13,9 @@ import { loginToAPI } from "../util/API";
 import CSRFToken from "../util/Csrf";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useNavigate, useLocation } from "react-router-dom";
-import { MetaContext } from "../Components/Auth";
+import { MetaContext } from "../Components/Providers/Auth";
 import Loader from "../Components/Loader";
-import { ErrorContext } from "../Components/Error";
+import { ErrorContext } from "../Components/Providers/Error";
 import SqueezeLogo from "../Components/SqueezeLogo.png";
 
 export function Login() {

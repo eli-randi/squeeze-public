@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import AppBar from "@mui/material/AppBar";
-import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
+import { useContext } from "react";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import LinkIcon from "@mui/icons-material/Link";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { LinkedToolbarItem, ButtonToolbarItem } from "./ToolbarItem";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logoutFromAPI } from "../util/API";
-import ErrorContext from "./Error";
-import { Grid, useTheme } from "@mui/material";
-import SqueezeLogo from "./SqueezeLogo.png";
+import ErrorContext from "./Providers/Error";
+import { Grid, Drawer } from "@mui/material";
+import SqueezeLogo from "../assets/SqueezeLogo.png";
 import { Link } from "react-router-dom";
-import { MetaContext } from "./Auth";
+import { MetaContext } from "./Providers/MetaProvider";
 
 const drawerWidth = 240;
 
-export function ClippedDrawer(props) {
+export const ClippedDrawer = () => {
+
   const errorContext = useContext(ErrorContext);
   const meta = useContext(MetaContext);
 
@@ -29,12 +27,9 @@ export function ClippedDrawer(props) {
       window.location.href = logout_url;
     });
   };
+
   return (
-    <Box
-      sx={{ display: "flex", [`& .MuiToolbar-gutters`]: { display: "none" } }}
-    >
-      <CssBaseline />
-      <Drawer
+    <Drawer
         variant="permanent"
         sx={{
           width: drawerWidth,
@@ -145,17 +140,5 @@ export function ClippedDrawer(props) {
           </Grid>
         </Grid>
       </Drawer>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          //  pt: '70px'
-        }}
-      >
-        <Toolbar />
-        {props.children}
-      </Box>
-    </Box>
-  );
+  )
 }

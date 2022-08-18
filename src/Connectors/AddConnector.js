@@ -5,10 +5,10 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { find } from "lodash";
 import { ClippedDrawer } from "../Components/ClippedDrawer";
-import { MetaContext } from "../Components/Auth";
+import { MetaContext } from "../Components/Providers/Auth";
 import { openCredentialWindow, prettifySnakeCase } from "../util/Utils";
 import BackButton from "Components/BackButton/BackButton";
-import { ErrorContext } from "../Components/Error";
+import { ErrorContext } from "../Components/Providers/Error";
 import { APIGet, APIPost, API_HOST } from "../util/API";
 import { getConnectorIcon } from "./ConnectorIcons";
 

@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material';
-import { MetaProvider, RequireAuth } from './Components/Auth';
-import ErrorSnackbar, { ErrorProvider } from './Components/Error';
+import { RequireAuth } from './Components/Providers/Auth';
+import { MetaProvider } from "./Components/Providers/MetaProvider";
+import ErrorSnackbar, { ErrorProvider } from './Components/Providers/Error';
 import Home from './pages/Home/Home';
 import Dashboards from 'pages/Dashboards/Dashboards';
 import AddDashboard from "pages/AddDashboard/AddDashboard";
@@ -9,7 +10,6 @@ import Accounts from './pages/Accounts/Accounts'
 import AddConnector from "pages/AddConnector/AddConnector";
 import { theme } from "util/theme";
 import './App.css';
-import { SelectConnector } from "pages/SelectConnector/SelectConnector";
 
 const App = () => {
   return (
@@ -20,13 +20,12 @@ const App = () => {
             <RequireAuth>
               <Routes>
                 <Route path='/home' element={<Home />} />
-                <Route path='/accounts' element={<Accounts />}/>
-                <Route path='/dashboards' element={<Dashboards />}/>
+                <Route path='/accounts' element={<Accounts />} />
+                <Route path='/dashboards' element={<Dashboards />} />
                 <Route path='/add_dashboard' element={<AddDashboard />} />
-                {/* <Route path='/add_connector/:connectorType' element={<AddConnector />}/> */}
                 <Route path='/add_connector' element={<AddConnector />} />
-                <Route path='/new_add_connector' element={<SelectConnector className={'CreateConnectorPage'}/>} />
                 <Route path='/' element={<Navigate to='/home' replace />} />
+                <Route path='/new_customer_flow' element={<AddConnector showClippedDrawer={false} requireConnectors={false} />} />
               </Routes>
             </RequireAuth>
           </MetaProvider>

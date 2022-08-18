@@ -7,7 +7,7 @@ const BackButton: React.FC<{url: string}> = ({url}) => {
   const navigate = useNavigate();
   return (
     <Button variant="outlined" color="secondary" startIcon={<KeyboardReturnIcon />}
-        sx={{ float: 'left', marginLeft: '10px', marginBottom: '20px', marginTop: '-10px' }}
+        sx={{ width: '20%', float: 'left', marginLeft: '2%', marginBottom: '2%'}}
         onClick={() => navigate(url)}
     >
         Back

@@ -15,7 +15,7 @@ import Modal from "../Components/Modal";
 import { CircularProgress } from "@mui/material";
 import AlertModal from "../Components/AlertModal";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ErrorContext } from "../Components/Error";
+import { ErrorContext } from "../Components/Providers/Error";
 import { getConnectorIcon } from "./ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";

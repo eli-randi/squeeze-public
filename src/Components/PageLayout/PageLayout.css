@@ -1,0 +1,11 @@
+.PageLayout {
+  display: flex;
+  height: 100vh;
+}
+
+.Components {
+  width: calc(100% - 240px);
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+}

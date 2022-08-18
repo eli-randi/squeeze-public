@@ -1,23 +1,19 @@
-import GlobalStyles from '@mui/material/GlobalStyles';
-
-import { SelectConnector } from "pages/SelectConnector/SelectConnector";
-import { ClippedDrawer } from "Components/ClippedDrawer";
+import { SelectConnector } from "Components/ConnectorFlow/SelectConnector";
 
 import './AddConnector.css'
+import PageLayout from 'Components/PageLayout/PageLayout';
 
-const AddConnector = () => {
-  const inputGlobalStyles = <GlobalStyles styles={{ '& .MuiBox-root': { padding: 0 } }} />
+const AddConnector : React.FC<{showClippedDrawer?: boolean, requireConnectors?: boolean}> = ({showClippedDrawer = true, requireConnectors = true}) => {
 
   return (
     <>
-    {inputGlobalStyles}
-    <ClippedDrawer className='ClippedDrawerAddConnector'>
-      <div className="AddConnectorPortalPage">
-        <SelectConnector className={'CreateConnectorPortal'}/>
-      </div>
-    </ClippedDrawer>
+      <PageLayout showClippedDrawer={showClippedDrawer} requireConnectors={requireConnectors}>
+        <div>
+          <SelectConnector/>
+        </div>
+      </PageLayout>
     </>
-    
+
   );
 };
 
