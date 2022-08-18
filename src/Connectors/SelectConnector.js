@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import { ClippedDrawer } from "../Components/ClippedDrawer";
-import { MetaContext } from "../Components/Auth";
+import { MetaContext } from "../Components/Providers/Auth";
 import { useContext, useState } from "react";
 import { Grid, Paper, Typography, Card, CardActionArea, CardContent } from "@mui/material";
 import CustomizedInputBase from "../Components/SearchBar";
 import { getConnectorIcon } from "./ConnectorIcons";
-import { BackButton } from "../util/Utils";
+import BackButton from "Components/BackButton/BackButton";
 
 export const SelectConnector = () => {
     const meta = useContext(MetaContext);
@@ -27,7 +26,7 @@ export const SelectConnector = () => {
     }
 
     return (
-        <ClippedDrawer>
+        <>
             <BackButton
             url = {'/home'} />
             <Paper sx={{ width: '96%', overflow: 'hidden', mx: '2%', borderRadius: '20px' }}>
@@ -92,16 +91,10 @@ export const SelectConnector = () => {
                                 </CardActionArea>
                             </Card> 
                             </Grid>
-                            
-
                         )
                     })}
                 </Grid>
-
             </Paper>
-
-        </ClippedDrawer>
-
+        </>
     )
-
 }

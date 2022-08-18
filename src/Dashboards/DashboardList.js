@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ClippedDrawer } from '../Components/ClippedDrawer'
-import { ErrorContext } from '../Components/Error';
+import { ErrorContext } from '../Components/Providers/Error';
 import { getDashboardsFromAPI } from '../util/API';
 import BasicTable from '../Components/Table';
 import moment from 'moment';
@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import Modal from '../Components/Modal';
 import { Dashboard } from './Dashboard';
 import { Grid } from '@mui/material';
-import { PageTitle } from '../util/Utils';
 
 const renderDashboardName = (row) => row.dashboard_name
 
@@ -89,9 +88,7 @@ export function DashboardList() {
 
 
     return (
-        <ClippedDrawer>
-            <PageTitle
-            title={'Dashboards'} />
+        <>
             <BasicTable
                 rows={dashboards}
                 title=''
@@ -115,6 +112,6 @@ export function DashboardList() {
                 onSubmit = {() => setIsLoading(true)}
                 />
             </Modal>
-        </ClippedDrawer>
+        </>
     )
 }
