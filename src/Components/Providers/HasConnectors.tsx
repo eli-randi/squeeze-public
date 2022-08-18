@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getConnectorsFromAPI } from "../../util/API";
 import { Navigate } from "react-router-dom";
 import { ErrorContext } from "./Error";

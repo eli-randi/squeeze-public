@@ -136,7 +136,7 @@ const ConnectorDetails: React.FC<{ fieldsToRender: any, onSubmit: (event: React.
             color="primary"
             variant="contained"
             sx={{ alignSelf: 'center', width: '50%' }}
-            onClick={() => onSubmit}
+            onClick={onSubmit}
           >
             Create Connector
           </Button>
