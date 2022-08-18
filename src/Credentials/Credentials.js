@@ -16,7 +16,7 @@ import { IconButton } from "@mui/material";
 import ErrorContext from '../Components/Providers/Error'
 import { openCredentialWindow } from "../util/Utils";
 import Modal from "../Components/Modal";
-import { Connectors } from "../Connectors/Connectors";
+import { Connectors } from "../Components/Connectors";
 
 
 const CredentialHeads = [['Description', 'description'], ['Connector Type', 'type'], ['Refresh', 'can_refresh']]

@@ -1,4 +1,4 @@
-import { Connectors } from 'Connectors/Connectors';
+import { Connectors } from 'Components/Connectors';
 import PageLayout from '../../Components/PageLayout/PageLayout'
 
 const Home = () => {

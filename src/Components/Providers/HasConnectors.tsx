@@ -18,7 +18,7 @@ export const RequireConnectors : React.FC<{children: JSX.Element}> = ({children}
     }, [])
 
 
-    if (connectors == null || connectors.length === 0) {
+    if (connectors && connectors.length === 0) {
         return (
           <Navigate to='/new_customer_flow' replace />
         )

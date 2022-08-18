@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import CustomizedInputBase from "../SearchBar";
-import { getConnectorIcon } from "../../Connectors/ConnectorIcons";
+import { getConnectorIcon } from "../../util/ConnectorIcons";
 
 import CreateConnectorStepper from "Components/ConnectorFlow/CreateConnectorStepper";
 

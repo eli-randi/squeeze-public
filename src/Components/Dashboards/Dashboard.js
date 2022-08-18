@@ -5,14 +5,14 @@ import { Button, Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Paper } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { getConnectorsFromAPI } from '../util/API'
-import ErrorContext from '../Components/Providers/Error';
-import { APIPost } from '../util/API';
+import { getConnectorsFromAPI } from '../../util/API'
+import ErrorContext from '../Providers/Error';
+import { APIPost } from '../../util/API';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Backdrop } from '@mui/material';
-import { MetaContext } from '../Components/Providers/MetaProvider';
-import { prettifySnakeCase } from '../util/Utils'
+import { MetaContext } from '../Providers/MetaProvider';
+import { prettifySnakeCase } from '../../util/Utils'
 
 
 

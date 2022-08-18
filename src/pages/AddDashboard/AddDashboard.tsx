@@ -1,5 +1,5 @@
 import BackButton from "Components/BackButton/BackButton";
-import { Dashboard } from "Dashboards/Dashboard";
+import { Dashboard } from "Components/Dashboards/Dashboard";
 import PageLayout from "Components/PageLayout/PageLayout";
 
 const AddDashboard = () => {

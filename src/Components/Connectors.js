@@ -1,22 +1,22 @@
-import { ClippedDrawer } from "../Components/ClippedDrawer";
+import { ClippedDrawer } from "./ClippedDrawer";
 import React, { useEffect, useState, useContext } from "react";
 import {
   getConnectorsFromAPI,
   getWorkflowsFromAPI,
   deleteConnectorFromAPI,
 } from "../util/API";
-import BasicTable from "../Components/Table";
+import BasicTable from "./Table";
 import { Grid } from "@mui/material";
 import moment from "moment";
 import { Chip } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
-import Modal from "../Components/Modal";
+import Modal from "./Modal";
 import { CircularProgress } from "@mui/material";
-import AlertModal from "../Components/AlertModal";
+import AlertModal from "./AlertModal";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ErrorContext } from "../Components/Providers/Error";
-import { getConnectorIcon } from "./ConnectorIcons";
+import { ErrorContext } from "./Providers/Error";
+import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
 

@@ -1,5 +1,5 @@
 import PageLayout from "../../Components/PageLayout/PageLayout"
-import {DashboardList} from '../../Dashboards/DashboardList'
+import {DashboardList} from '../../Components/Dashboards/DashboardList'
 
 const Dashboards = () => {
   return (

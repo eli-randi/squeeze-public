@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ClippedDrawer } from '../Components/ClippedDrawer'
-import { ErrorContext } from '../Components/Providers/Error';
-import { getDashboardsFromAPI } from '../util/API';
-import BasicTable from '../Components/Table';
+import { ClippedDrawer } from '../ClippedDrawer'
+import { ErrorContext } from '../Providers/Error';
+import { getDashboardsFromAPI } from '../../util/API';
+import BasicTable from '../Table';
 import moment from 'moment';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Button from '@mui/material/Button';
-import Modal from '../Components/Modal';
+import Modal from '../Modal';
 import { Dashboard } from './Dashboard';
 import { Grid } from '@mui/material';
 
