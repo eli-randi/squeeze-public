@@ -75,8 +75,8 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
             value={formData[fieldName]}
             id={fieldName}
             fullWidth
-            label={prettyName}
-            placeholder={prettyName}
+            label={field.label || prettyName}
+            placeholder={field.placeholder || prettyName}
             onChange={(e) => setField(e.target.value)}
           >
             {APIChoices &&

@@ -11,8 +11,8 @@ export const ChoiceField: React.FC<{ fieldName: string; setField: (value: string
       value={formData[fieldName]}
       id={fieldName}
       fullWidth
-      label={prettyName}
-      placeholder={prettyName}
+      label={field.label || prettyName}
+      placeholder={field.placeholder || prettyName}
       onChange={(e) => setField(e.target.value)}
     >
       {field.options.map((choice: string) => {

@@ -2,15 +2,15 @@ import React from "react";
 import { TextField } from "@mui/material";
 import { prettifySnakeCase } from "util/Utils";
 
-export const StringField: React.FC<{ fieldName: string; setField: (value: string) => void; }> = ({ fieldName, setField }) => {
+export const StringField: React.FC<{ fieldName: string; setField: (value: string) => void; field: any;}> = ({ fieldName, setField, field }) => {
   const prettyName = prettifySnakeCase(fieldName);
   return (
     <TextField
       required
       id={fieldName}
       fullWidth
-      label={prettyName}
-      placeholder={prettyName}
+      label={field.label || prettyName}
+      placeholder={field.placeholder || prettyName}
       onChange={(e) => setField(e.target.value)} />
   );
 };

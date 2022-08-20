@@ -13,7 +13,9 @@ export const GenericField: React.FC<{ fieldName: string; setField: (value: strin
       <StringField
         key={fieldName}
         fieldName={fieldName}
-        setField={setField} />
+        setField={setField}
+        field={field}
+      />
     );
   }
   else if (field.type === 'choice') {
