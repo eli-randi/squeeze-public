@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useQuery } from '@tanstack/react-query'
 import { ClippedDrawer } from "./ClippedDrawer";
 import {
   getConnectorsFromAPI,
@@ -20,7 +19,8 @@ import { ErrorContext } from "./Providers/Error";
 import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
-import { API_HOST, fetchConnectors } from "../util/API";
+import { API_HOST } from "../util/API";
+import { useConnectorQuery } from "hooks/useConnectorQuery";
 
 const ConnectorHeads = [
   ["Connector Name", "name"],
@@ -141,22 +141,7 @@ export function Connectors(props) {
     setConnectorInfo(null);
   };
 
-  const getConnectors = async () => {
-    const response = await fetch(`${API_HOST}/connectors/list`, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-    });
-    return response.json();
-  }
-
-  const { data, isLoading, isError } = useQuery(['connectors'], fetchConnectors);
+  const { data, isLoading, isError } = useConnectorQuery();
 
   useEffect(() => {
     if (isError) {
