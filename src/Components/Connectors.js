@@ -1,5 +1,6 @@
-import { ClippedDrawer } from "./ClippedDrawer";
 import React, { useEffect, useState, useContext } from "react";
+import { useQuery } from '@tanstack/react-query'
+import { ClippedDrawer } from "./ClippedDrawer";
 import {
   getConnectorsFromAPI,
   getWorkflowsFromAPI,
@@ -19,6 +20,7 @@ import { ErrorContext } from "./Providers/Error";
 import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
+import { API_HOST } from "../util/API";
 
 const ConnectorHeads = [
   ["Connector Name", "name"],
@@ -119,7 +121,6 @@ export function Connectors(props) {
   const credentialInfo = props.credentialInfo ? props.credentialInfo : null;
   const errorContext = useContext(ErrorContext);
   const [openModal, setOpenModal] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
   const [connectors, setConnectors] = useState([]);
   const [connectorInfo, setConnectorInfo] = useState(null);
   const [isLoadingConnectorInfo, setIsLoadingConnectorInfo] = useState(false);
@@ -140,22 +141,33 @@ export function Connectors(props) {
     setConnectorInfo(null);
   };
 
+  const getConnectors = async () => {
+    const response = await fetch(`${API_HOST}/connectors/list`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+    });
+    return response.json();
+  }
+
+  const { data, isLoading } = useQuery(['connectors'], getConnectors);
+
   useEffect(() => {
-    if (isLoading) {
-      getConnectorsFromAPI(errorContext).then((resp) => {
-        if (credentialInfo) {
-          const response = resp.filter(
-            (connector) => connector.credential_id === credentialInfo.id
-          );
-          setConnectors(response);
-          setisLoading(false);
-        } else {
-          setConnectors(resp);
-          setisLoading(false);
-        }
-      });
+    if (data) {
+      if (credentialInfo) {
+        const response = data.filter((connector) => connector.credential_id === credentialInfo.id);
+        setConnectors(response);
+      } else {
+        setConnectors(data.data);
+      }
     }
-  }, [isLoading, errorContext]);
+  }, [data])
 
   const getModalTitle = () => {
     if (connectorInfo) {
