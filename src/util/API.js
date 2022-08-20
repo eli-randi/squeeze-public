@@ -112,3 +112,29 @@ export function deleteConnectorFromAPI(id, errorContext) {
     return response.ok
   })
 }
+
+// BEGIN REACT QUERY
+
+// Same as APIGet but without using errorContext
+export const APIfetch = async (url) => {
+  const response = await fetch(API_HOST + url, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  });
+  const deserialisedResponse = await response.json();
+  return deserialisedResponse;
+}
+
+export const fetchConnectors = async () => {
+  const connectorResponse = await APIGet('/connectors/list');
+  return connectorResponse.data;
+}
+
+// END REACT QUERY

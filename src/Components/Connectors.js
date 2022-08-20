@@ -20,7 +20,7 @@ import { ErrorContext } from "./Providers/Error";
 import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
-import { API_HOST } from "../util/API";
+import { API_HOST, fetchConnectors } from "../util/API";
 
 const ConnectorHeads = [
   ["Connector Name", "name"],
@@ -156,7 +156,13 @@ export function Connectors(props) {
     return response.json();
   }
 
-  const { data, isLoading } = useQuery(['connectors'], getConnectors);
+  const { data, isLoading, isError } = useQuery(['connectors'], fetchConnectors);
+
+  useEffect(() => {
+    if (isError) {
+      errorContext.addError()
+    }
+  }, [isError]);
 
   useEffect(() => {
     if (data) {
@@ -164,10 +170,10 @@ export function Connectors(props) {
         const response = data.filter((connector) => connector.credential_id === credentialInfo.id);
         setConnectors(response);
       } else {
-        setConnectors(data.data);
+        setConnectors(data);
       }
     }
-  }, [data])
+  }, [data]);
 
   const getModalTitle = () => {
     if (connectorInfo) {
