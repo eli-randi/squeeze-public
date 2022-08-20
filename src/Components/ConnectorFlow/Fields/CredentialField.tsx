@@ -31,7 +31,6 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
       let url = field.url;
       APIGet(url, errorContext).then((resp) => {
         setAPIChoices(resp.data);
-        console.log(resp.data);
         setIsLoading(false);
       });
 

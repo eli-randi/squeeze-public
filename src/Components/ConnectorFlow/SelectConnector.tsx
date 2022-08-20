@@ -64,11 +64,10 @@ const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: strin
 
 const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string | number) => void, formData: any, field: any, widgets: Widget[], incrementStep: () => void, decrementStep: () => void }> =
   ({ fieldName, setField, formData, field, widgets, incrementStep, decrementStep }) => {
-    console.log(formData)
 
     const wrappedSetField = (value: string | number) => {
       setField(value)
-      setTimeout(() => incrementStep(), 500)
+      incrementStep()
     }
 
     return (
@@ -169,7 +168,6 @@ export const SelectConnector = () => {
   }
 
   const onBackClick = () => {
-    console.log('back click')
     if(doesHaveCredentialStep(connectorConfig.current)) {
       const setField = setFieldGenerator('credential_id');
       setField('');
@@ -195,7 +193,6 @@ export const SelectConnector = () => {
     : [];
 
   const fieldNames = Object.keys(fields);
-  console.log('field names:' + fieldNames)
   let initialFormData: any = {};
 
   fieldNames.forEach((fieldName) => (initialFormData[fieldName] = ""));

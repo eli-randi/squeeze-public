@@ -29,7 +29,6 @@ export const APIChoiceField: React.FC<{ fieldName: string; setField: (value: str
         );
       APIGet(url, errorContext).then((resp) => {
         setAPIChoices(resp.data);
-        console.log(resp.data);
       });
 
     }
