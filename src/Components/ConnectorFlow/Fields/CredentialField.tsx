@@ -3,9 +3,10 @@ import { Grid, TextField, MenuItem } from "@mui/material";
 import { ErrorContext } from "Components/Providers/Error";
 import { APIGet } from "util/API";
 import Loader from "Components/Loader";
-import { Widget, GenericWidget } from "./Widget";
+import { GenericWidget } from "./Widget";
+import {GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget} from "../../../types";
 
-export const CredentialField: React.FC<{ fieldName: string; setField: (value: string | number) => void; formData: any; field: any; widgets: Widget[]; }> = ({ fieldName, setField, formData, field, widgets }) => {
+export const CredentialField: React.FC<{ fieldName: string; setField: (value: string | number) => void; formData: GenericConnectorFormData; field: GenericConnectorField; widgets: GenericConnectorWidget[]; }> = ({ fieldName, setField, formData, field, widgets }) => {
   const errorContext = useContext(ErrorContext);
   const [APIChoices, setAPIChoices] = useState<null | { id: string | number; label: string; }[]>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +76,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
             id={fieldName}
             fullWidth
             label={field.label || prettyName}
-            placeholder={field.placeholder || prettyName}
+            placeholder={(field.placeholder || prettyName) as string}
             onChange={(e) => setField(e.target.value)}
           >
             {APIChoices &&
