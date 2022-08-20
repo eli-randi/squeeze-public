@@ -9,7 +9,6 @@ export const openCredentialWindow = (url: string) => {
   return window.open(url, "MsgWindow", "width=500,height=500")
 }
 
-//@ts-ignore
-export const formatTime = (time) => {
+export const formatTime = (time: string) => {
   return time.replace('Z', '').replace('T', ' ');
 }

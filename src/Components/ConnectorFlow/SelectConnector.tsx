@@ -13,7 +13,7 @@ import './SelectConnector.css'
 import { ErrorContext } from "Components/Providers/Error";
 import { APIPost } from "util/API";
 import { GenericField } from "./Fields/GenericField";
-import { Widget } from "./Fields/Widget";
+import {ConnectorConfig, GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget} from "../../types";
 
 
 const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void }> = ({ selectConnectorType }) => {
@@ -24,10 +24,9 @@ const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: strin
   }
 
   // @ts-ignore
-  let connectorsToRender = meta.fullMeta ? meta.fullMeta.connectors : [];
+  let connectorsToRender: ConnectorConfig[] = meta.fullMeta ? meta.fullMeta.connectors : [];
 
   if (searched) {
-    //@ts-ignore
     connectorsToRender = connectorsToRender.filter((connector) => {
       return connector.label.toLowerCase().includes(searched.toLowerCase())
     })
@@ -43,7 +42,6 @@ const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: strin
         />
       </div>
       <div className="ConnectorTiles">
-        {/* @ts-ignore */}
         {connectorsToRender.map((connector) => {
           return (
             <div className="Tile"
@@ -62,7 +60,7 @@ const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: strin
 }
 
 
-const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string | number) => void, formData: any, field: any, widgets: Widget[], incrementStep: () => void, decrementStep: () => void }> =
+const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string | number) => void, formData: GenericConnectorFormData, field: GenericConnectorField, widgets: GenericConnectorWidget[], incrementStep: () => void, decrementStep: () => void }> =
   ({ fieldName, setField, formData, field, widgets, incrementStep, decrementStep }) => {
 
     const wrappedSetField = (value: string | number) => {
@@ -102,7 +100,7 @@ const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string 
 
 
 const ConnectorDetails: React.FC<{
-  fieldsToRender: any,
+  fieldsToRender: (JSX.Element | null)[],
   onSubmit: (event: React.FormEvent) => void,
   onBackClick: () => void,
   connectorTypeLabel: string
@@ -188,12 +186,12 @@ export const SelectConnector = () => {
 
 
   const fields = connectorConfig.current ? connectorConfig.current.fields : {};
-  const widgets: Widget[] = connectorConfig.current && connectorConfig.current.extra_widgets
+  const widgets: GenericConnectorWidget[] = connectorConfig.current && connectorConfig.current.extra_widgets
     ? connectorConfig.current.extra_widgets
     : [];
 
   const fieldNames = Object.keys(fields);
-  let initialFormData: any = {};
+  let initialFormData: GenericConnectorFormData = {};
 
   fieldNames.forEach((fieldName) => (initialFormData[fieldName] = ""));
   const [formData, setFormData] = useState(initialFormData);
@@ -208,7 +206,6 @@ export const SelectConnector = () => {
   }
 
   const fieldsToRender = Object.keys(fields).map((fieldName) => {
-    // const setIsLoading = () => false;
     if (fieldName === 'credential_id') {
       return null;
     }
@@ -266,7 +263,6 @@ export const SelectConnector = () => {
   const inputGlobalStyles = <GlobalStyles styles={{ '& .MuiInputBase-root': { backgroundColor: 'white', textAlign: 'left' } }} />
 
   return (
-    //@ts-ignore
     <div className='CreateConnectorPage'>
       {inputGlobalStyles}
       <CreateConnectorStepper step={step} />

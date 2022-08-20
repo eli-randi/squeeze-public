@@ -4,11 +4,12 @@ import { StringField } from "./StringField";
 import { ChoiceField } from "./ChoiceField";
 import { APIChoiceField } from "./APIChoiceField";
 import { CredentialField } from "./CredentialField";
-import { Widget } from "./Widget";
+import {GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget} from "../../../types";
 
-export const GenericField: React.FC<{ fieldName: string; setField: (value: string | number) => void; formData: any; field: any; widgets: Widget[]; }> = ({ fieldName, setField, formData, field, widgets }) => {
+export const GenericField: React.FC<{ fieldName: string; setField: (value: string | number) => void; formData: GenericConnectorFormData; field: GenericConnectorField; widgets: GenericConnectorWidget[]; }> = ({ fieldName, setField, formData, field, widgets }) => {
   let component;
-  if (field.type === 'string') {
+  const fieldType = field.type as string;
+  if (fieldType === 'string') {
     component = (
       <StringField
         key={fieldName}
@@ -18,7 +19,7 @@ export const GenericField: React.FC<{ fieldName: string; setField: (value: strin
       />
     );
   }
-  else if (field.type === 'choice') {
+  else if (fieldType === 'choice') {
     component = (
       <ChoiceField
         key={fieldName}
@@ -28,7 +29,7 @@ export const GenericField: React.FC<{ fieldName: string; setField: (value: strin
         formData={formData} />
     );
   }
-  else if (field.type = 'choice_from_api' && fieldName !== 'credential_id') {
+  else if (fieldType === 'choice_from_api' && fieldName !== 'credential_id') {
     component = (
       <APIChoiceField
         key={fieldName}
