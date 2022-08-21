@@ -1,158 +1,77 @@
 import { useNavigate } from "react-router-dom"
-import { MetaContext } from '../Providers/MetaProvider'
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { Button } from "@mui/material";
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import CustomizedInputBase from "../SearchBar";
-import { getConnectorIcon } from "../../util/ConnectorIcons";
+import Lottie from "lottie-react";
 
+import DashboardLottie from '../../assets/DashboardLottie.json';
+import { LoadingAnimation } from "./LoadingAnimation";
+import Loader from "Components/Loader";
 import CreateConnectorStepper from "Components/ConnectorFlow/CreateConnectorStepper";
-
-import './SelectConnector.css'
 import { ErrorContext } from "Components/Providers/Error";
 import { APIPost } from "util/API";
 import { GenericField } from "./Fields/GenericField";
 import {ConnectorConfig, GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget} from "../../types";
+import { ConnectorDetails } from "./StepPages/ConnectorDetails";
+import { ConnectorTypeSelect } from "./StepPages/ConnectorTypeSelect";
+import { CredentialsSelect } from "./StepPages/CredentialsSelect";
+import { MetaContext } from '../Providers/MetaProvider'
 
+import './SelectConnector.css'
+import { useConnectorQuery } from "hooks/useConnectorQuery";
 
-const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void }> = ({ selectConnectorType }) => {
-  const meta = useContext(MetaContext);
-  const [searched, setSearched] = useState('');
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearched(e.target.value);
-  }
-
-  // @ts-ignore
-  let connectorsToRender: ConnectorConfig[] = meta.fullMeta ? meta.fullMeta.connectors : [];
-
-  if (searched) {
-    connectorsToRender = connectorsToRender.filter((connector) => {
-      return connector.label.toLowerCase().includes(searched.toLowerCase())
-    })
-  }
-
-  return (
-    <div>
-      <h1>Choose your platform</h1>
-      <div className="ConnectorSearchBar">
-        <CustomizedInputBase
-          sx={{ float: 'none', margin: 'auto' }}
-          handleSearchInput={handleSearchInput}
-        />
-      </div>
-      <div className="ConnectorTiles">
-        {connectorsToRender.map((connector) => {
-          return (
-            <div className="Tile"
-              onClick={() => selectConnectorType(connector.name)}
-            >
-              <img src={getConnectorIcon(connector.name)} height='100px' alt="Social Media Icon" />
-              <h3>{connector.label}</h3>
-            </div>
-          )
-        })}
-      </div>
-      <p>Can’t see the connector you need or need any help?</p>
-      <a href="mailto:hello@thisissqueeze.com">Contact us!</a>
-    </div>
-  )
-}
-
-
-const CredentialsSelect: React.FC<{ fieldName: string, setField: (value: string | number) => void, formData: GenericConnectorFormData, field: GenericConnectorField, widgets: GenericConnectorWidget[], incrementStep: () => void, decrementStep: () => void }> =
-  ({ fieldName, setField, formData, field, widgets, incrementStep, decrementStep }) => {
-
-    const wrappedSetField = (value: string | number) => {
-      setField(value)
-      incrementStep()
-    }
-
-    return (
-      <div className='CredentialChoice'>
-        <h1>Connect your account</h1>
-        <div className="BackButton">
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={() => {
-              decrementStep()
-            }}
-          >
-            <KeyboardReturnIcon />
-            Go back
-          </Button>
-        </div>
-        <GenericField
-          fieldName={fieldName}
-          field={field}
-          setField={wrappedSetField}
-          formData={formData}
-          widgets={widgets}
-        />
-        <p>We will never post anything on your account or share your data.</p>
-        <p>See our privacy policy <a target="_blank" href='https://www.thisissqueeze.com/privacy-policy'>here.</a></p>
-      </div>
-    )
-  }
-
-
-
-
-const ConnectorDetails: React.FC<{
-  fieldsToRender: (JSX.Element | null)[],
-  onSubmit: (event: React.FormEvent) => void,
-  onBackClick: () => void,
-  connectorTypeLabel: string
-}> = ({ fieldsToRender, onSubmit, onBackClick, connectorTypeLabel }) => {
-    const navigate = useNavigate();
-
-    return (
-      <div className="CreateDashboard">
-        <h1>Create your {connectorTypeLabel} connector</h1>
-        <div className="BackButton">
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={onBackClick}
-          >
-            <KeyboardReturnIcon />
-            Go back
-          </Button>
-        </div>
-        <div className="CreateDashboardComponent">
-          {fieldsToRender}
-          <Button
-            color="primary"
-            variant="contained"
-            sx={{ alignSelf: 'center', width: '50%' }}
-            onClick={onSubmit}
-          >
-            Create Connector
-          </Button>
-          <p><a href='mailto:hello@thisissqueeze.com'>Need any help? Contact us!</a></p>
-        </div>
-      </div>
-    )
-  }
-
+const inputGlobalStyles = <GlobalStyles styles={{ '& .MuiInputBase-root': { backgroundColor: 'white', textAlign: 'left' } }} />
 
 const doesHaveCredentialStep = (config: null | any) => {
-  if(config) {
+  if (config) {
     return config.fields.hasOwnProperty('credential_id')
   } else return null;
-  
+}
+
+const DashboardTypes = {
+  google_analytics: '',
+  instagram_business: '',
+  google_ads: '',
+  linkedin: '',
+  google_sheets: '',
+  twitter_organic: '',
+  tiktok_organic: '',
+  facebook_ads: '',
+  shopify: '',
+  youtube: '',
+  klaviyo: '',
+  s3: '',
+  pinterest: '',
+  outbrain_amplify: '',
+  amplitude: ''
+}
+
+const getDashboardTypeFromConnectorType : (connectorType: string) => any = (connectorType) => {
+  //@ts-ignore
+  return DashboardTypes[connectorType];
 }
 
 
 export const SelectConnector = () => {
-  const meta = useContext(MetaContext);
+  const meta: any = useContext(MetaContext);
   const errorContext = useContext(ErrorContext)
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(0);
   const [connectorType, setConnectorType] = useState<null | string>(null);
   const connectorConfig = useRef<null | any>(null);
+  //test purposes
+  // const useMe = true;
+  const [isPendingSubmit, setIsPendingSubmit] = useState(true);
+  const connectorQuery = useConnectorQuery()
+
+  useEffect(() => {
+    if(connectorQuery.isError) {
+      // @ts-ignore
+      errorContext.addError()
+    }
+  }, [connectorQuery.isError])
+
 
   const incrementStep = () => {
     setStep(prevStep => prevStep + 1)
@@ -169,7 +88,7 @@ export const SelectConnector = () => {
     if(doesHaveCredentialStep(connectorConfig.current)) {
       const setField = setFieldGenerator('credential_id');
       setField('');
-    } 
+    }
     decrementStep();
   }
 
@@ -183,8 +102,7 @@ export const SelectConnector = () => {
     }
   }
 
-
-
+  // Fields setter
   const fields = connectorConfig.current ? connectorConfig.current.fields : {};
   const widgets: GenericConnectorWidget[] = connectorConfig.current && connectorConfig.current.extra_widgets
     ? connectorConfig.current.extra_widgets
@@ -219,16 +137,80 @@ export const SelectConnector = () => {
         widgets={widgets}
       />
     )
-
   });
 
+  // Submit functionality
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const submitUrl = connectorConfig.current.submit_url;
-    APIPost(submitUrl, formData, errorContext).then(() => navigate("/home"));
+    APIPost(submitUrl, formData, errorContext).then(() => navigate('/home'))
+
   }
 
+  // HANDLE DASHBOARD SUBMIT
+  const handleDashboardSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const submitUrl = connectorConfig.current.submit_url;
 
+    setIsPendingSubmit(true);
+
+    APIPost(submitUrl, formData, errorContext).then((resp) => {
+      const body = {
+        data: {
+          dashboard_name: `My first ${connectorConfig.current.label} dashboard`,
+          chart_groups: [
+            {
+              info: {
+                //what response is coming back
+                connector_id: 1,
+                currency: "GBP",
+                conversion_action_types: "",
+              },
+              type: getDashboardTypeFromConnectorType(connectorConfig.current.name) 
+            }
+          ]
+        }
+      }
+
+      APIPost('/reporting/create_dashboard', body, errorContext).then((resp) => {
+        setIsPendingSubmit(false);
+        //what id data is coming back? do you want to replace window or open new one
+        // window.open(`https://dashboards.thisissqueeze.com/superset/dashboard/${resp.id}`)
+      })
+    }
+    );
+
+  }
+
+  //loading state
+  // if(useMe) {
+  //   return (
+  //     <>
+  //     <button onClick={() => setIsPendingSubmit(!isPendingSubmit)}>click</button>
+  //     <LoadingAnimation isLoading = {isPendingSubmit}/>
+  //     </>
+  //   )
+  // }
+
+
+  // Loading State
+  if (connectorQuery.isLoading) {
+    return <Loader />
+  }
+
+  // Reached Limit State
+  if (connectorQuery.data && connectorQuery.data.length >= meta.maxConnectors) {
+    return (
+      <div className="LimitConnectorPage">
+        <h2>Sorry, you've reached your connector limit</h2>
+        <p>If you'd like to add more dashboards to your account</p>
+        <a href='mailto:hello@thisissqueeze.com'><Button variant='contained'>Contact us</Button></a>
+        <Lottie style={{ height: 300 }} animationData={DashboardLottie} loop={true} />
+      </div>
+    )
+  }
+
+  // Page steps 
   let currentStepComponent;
 
   if (step === 0) {
@@ -260,13 +242,14 @@ export const SelectConnector = () => {
     />
   }
 
-  const inputGlobalStyles = <GlobalStyles styles={{ '& .MuiInputBase-root': { backgroundColor: 'white', textAlign: 'left' } }} />
 
   return (
     <div className='CreateConnectorPage'>
       {inputGlobalStyles}
-      <CreateConnectorStepper step={step} />
-      {currentStepComponent}
+      <>
+        <CreateConnectorStepper step={step} />
+        {currentStepComponent}
+      </>
     </div>
 
   )
