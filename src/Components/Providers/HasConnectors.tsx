@@ -1,21 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getConnectorsFromAPI } from "../../util/API";
 import { Navigate } from "react-router-dom";
 import { ErrorContext } from "./Error";
+import {useConnectorQuery} from "../../hooks/useConnectorQuery";
 
 export const RequireConnectors : React.FC<{children: JSX.Element}> = ({children}) => {
     let errorContext = useContext(ErrorContext);
     const [connectors, setConnectors] = useState<null | string[]>(null)
+    const {data, isError} = useConnectorQuery()
 
     useEffect(() => {
-      const getConnectors = async () => {
-        let connectorsResp = await getConnectorsFromAPI(errorContext);
-        setConnectors(connectorsResp)
-      };
-      if (!connectors || connectors.length === 0) {
-        getConnectors();
-      }
-    }, [])
+        if(data) {
+            setConnectors(data)
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if(isError && errorContext) {
+            // @ts-ignore
+            errorContext.addError()
+        }
+    }, [isError]);
 
 
     if (connectors && connectors.length === 0) {

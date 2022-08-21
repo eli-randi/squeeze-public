@@ -31,18 +31,6 @@ export function APIGet (url, errorContext) {
 }
 
 
-export function getConnectorsFromAPI(errorContext) {
-  return APIGet('/connectors/list', errorContext).then(jsonResponse => {
-      return jsonResponse.data;
-    });
-  }
-
-export function getCredentialsFromAPI(errorContext) {
-  return APIGet('/credentials/', errorContext).then(jsonResponse => {
-      return jsonResponse.data;
-    });
-}
-
 export function getWorkflowsFromAPI(id, errorContext) {
   return APIGet(`/connectors/${id}/recent_workflows`, errorContext).then(jsonResponse => {
       return jsonResponse.data;
@@ -55,14 +43,6 @@ export function getMetaFromAPI(errorContext) {
         return jsonResponse.data;
       }
     );
-}
-
-export function getDashboardsFromAPI(errorContext) {
-  return APIGet('/reporting/dashboards', errorContext).then(
-    jsonResponse => {
-      return jsonResponse.data;
-    }
-  )
 }
 
 export function APIPost(url, body, errorContext) {
@@ -116,7 +96,7 @@ export function deleteConnectorFromAPI(id, errorContext) {
 // BEGIN REACT QUERY
 
 // Same as APIGet but without using errorContext
-export const APIfetch = async (url) => {
+export const fetchFromAPI = async (url) => {
   const response = await fetch(API_HOST + url, {
     method: 'GET',
     mode: 'cors',
@@ -128,13 +108,22 @@ export const APIfetch = async (url) => {
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
   });
-  const deserialisedResponse = await response.json();
-  return deserialisedResponse;
+  return await response.json();
 }
 
 export const fetchConnectors = async () => {
-  const connectorResponse = await APIGet('/connectors/list');
+  const connectorResponse = await fetchFromAPI('/connectors/list');
   return connectorResponse.data;
+}
+
+export const fetchCredentials = async() => {
+  const credentialsResponse = await fetchFromAPI('/credentials/')
+  return credentialsResponse.data;
+}
+
+export const fetchDashboards = async() => {
+  const dashboardsResponse = await fetchFromAPI('/reporting/dashboards')
+  return dashboardsResponse.data;
 }
 
 // END REACT QUERY

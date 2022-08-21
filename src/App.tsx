@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from '@mui/material';
 import { RequireAuth } from './Components/Providers/Auth';
 import { MetaProvider } from "./Components/Providers/MetaProvider";
