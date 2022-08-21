@@ -31,12 +31,6 @@ export function APIGet (url, errorContext) {
 }
 
 
-export function getWorkflowsFromAPI(id, errorContext) {
-  return APIGet(`/connectors/${id}/recent_workflows`, errorContext).then(jsonResponse => {
-      return jsonResponse.data;
-    });
-}
-
 export function getMetaFromAPI(errorContext) {
   return APIGet('/connectors/meta', errorContext).then(
       jsonResponse => {
@@ -124,6 +118,11 @@ export const fetchCredentials = async() => {
 export const fetchDashboards = async() => {
   const dashboardsResponse = await fetchFromAPI('/reporting/dashboards')
   return dashboardsResponse.data;
+}
+
+export const fetchWorkflows = async (id) => {
+  const workflowResponse = await fetchFromAPI(`/connectors/${id}/recent_workflows`);
+  return workflowResponse.data;
 }
 
 // END REACT QUERY

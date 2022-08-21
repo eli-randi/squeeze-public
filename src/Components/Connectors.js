@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  getWorkflowsFromAPI,
   deleteConnectorFromAPI,
 } from "../util/API";
 import BasicTable from "./Table";
@@ -18,6 +17,7 @@ import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
 import { useConnectorQuery } from "hooks/useConnectorQuery";
+import {useWorkflowQuery} from "../hooks/useWorkflowQuery";
 
 const ConnectorHeads = [
   ["Connector Name", "name"],
@@ -119,46 +119,39 @@ export function Connectors(props) {
   const errorContext = useContext(ErrorContext);
   const [openModal, setOpenModal] = useState(false);
   const [connectors, setConnectors] = useState([]);
-  const [connectorInfo, setConnectorInfo] = useState(null);
-  const [isLoadingConnectorInfo, setIsLoadingConnectorInfo] = useState(false);
+  const [selectedConnector, setSelectedConnector] = useState(null)
+  const workflowQuery = useWorkflowQuery(selectedConnector && selectedConnector.id)
+  const connectorQuery = useConnectorQuery()
 
   const rowOnClick = (connector) => {
-    setIsLoadingConnectorInfo(true);
-    let info = connector;
-    getWorkflowsFromAPI(connector.id, errorContext).then((resp) => {
-      info.workflows = resp;
-      setConnectorInfo(info);
-      setIsLoadingConnectorInfo(false);
-    });
+    setSelectedConnector(connector)
     setOpenModal(true);
   };
 
   const handleClose = (e) => {
     setOpenModal(false);
-    setConnectorInfo(null);
+    setSelectedConnector(null);
   };
 
-  const { data, isLoading, isError } = useConnectorQuery();
-
   useEffect(() => {
-    if (isError) {
+    if (connectorQuery.isError || workflowQuery.isError) {
       errorContext.addError()
     }
-  }, [isError]);
+  }, [connectorQuery.isError, workflowQuery.isError]);
 
   useEffect(() => {
-    if (data) {
+    if (connectorQuery.data) {
       if (credentialInfo) {
-        const response = data.filter((connector) => connector.credential_id === credentialInfo.id);
+        const response = connectorQuery.data.filter((connector) => connector.credential_id === credentialInfo.id);
         setConnectors(response);
       } else {
-        setConnectors(data);
+        setConnectors(connectorQuery.data);
       }
     }
-  }, [data]);
+  }, [connectorQuery.data]);
 
   const getModalTitle = () => {
-    if (connectorInfo) {
+    if (selectedConnector) {
       return (
         <Grid
           container
@@ -167,10 +160,10 @@ export function Connectors(props) {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Grid item>{connectorInfo.name}</Grid>
+          <Grid item>{selectedConnector.name}</Grid>
           <Grid item>
             <img
-              src={getConnectorIcon(connectorInfo.type)}
+              src={getConnectorIcon(selectedConnector.type)}
               style={{ width: 40 }}
               alt="Social Media Logo"
             />
@@ -181,10 +174,9 @@ export function Connectors(props) {
   };
 
   const deleteConnectorFunction = () => {
-    if (connectorInfo) {
-      let id = connectorInfo.id;
+    if (selectedConnector) {
+      let id = selectedConnector.id;
       deleteConnectorFromAPI(id, errorContext).then((_) => {
-        setisLoading(true);
         handleClose();
       });
     }
@@ -213,7 +205,7 @@ export function Connectors(props) {
         search={true}
         searchKey={(row) => row.name}
         columnStyle={ColumnStyle}
-        isLoading={isLoading}
+        isLoading={connectorQuery.isLoading}
         rowOnClick={credentialInfo ? null : rowOnClick}
       />
       <Modal
@@ -223,11 +215,11 @@ export function Connectors(props) {
         deleteFunction={handleAlertModal()}
       >
         <BasicTable
-          rows={(connectorInfo && connectorInfo.workflows) || []}
+          rows={(workflowQuery.data) || []}
           title="Recent Workflows"
           headlines={WorkflowHeads}
           search={false}
-          isLoading={isLoadingConnectorInfo}
+          isLoading={workflowQuery.isLoading}
           renderFunctions={WorkflowFunctions}
           disablePagination={true}
         />
