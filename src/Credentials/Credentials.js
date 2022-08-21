@@ -1,6 +1,5 @@
-import { ClippedDrawer } from "../Components/ClippedDrawer";
 import React, { useState, useEffect, useContext } from "react";
-import { API_HOST, getCredentialsFromAPI } from "../util/API";
+import { API_HOST } from "../util/API";
 import BasicTable from "../Components/Table";
 import LinkedinLogo from "../assets/LinkedIn_logo.png";
 import TwitterLogo from "../assets/Twitter-logo.png";
@@ -17,6 +16,7 @@ import ErrorContext from "../Components/Providers/Error";
 import { openCredentialWindow } from "../util/Utils";
 import Modal from "../Components/Modal";
 import { Connectors } from "../Components/Connectors";
+import {useCredentialQuery} from "../hooks/useCredentialQuery";
 
 const CredentialHeads = [
   ["Description", "description"],
@@ -39,7 +39,6 @@ const ColumnStyle = [{ width: "50%" }, { width: "35%" }, { width: "15%" }];
 
 export function Credentials() {
   const errorContext = useContext(ErrorContext);
-  const [isLoading, setIsLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [credentialInfo, setCredentialInfo] = useState(null);
 
@@ -82,12 +81,19 @@ export function Credentials() {
 
   const [credentials, setCredentials] = useState([]);
 
+  const {data, isLoading, isError} = useCredentialQuery()
+
   useEffect(() => {
-    getCredentialsFromAPI(errorContext).then((resp) => {
-      setCredentials(resp);
-      setIsLoading(false);
-    });
-  }, [errorContext]);
+    if(data) {
+      setCredentials(data)
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if(isError) {
+      errorContext.addError()
+    }
+  }, [isError])
 
   function rowOnClick(credential) {
     setOpenModal(true);

@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { ClippedDrawer } from "./ClippedDrawer";
 import {
-  getConnectorsFromAPI,
   getWorkflowsFromAPI,
   deleteConnectorFromAPI,
 } from "../util/API";
@@ -19,7 +17,6 @@ import { ErrorContext } from "./Providers/Error";
 import { getConnectorIcon } from "../util/ConnectorIcons";
 import MouseOverPopover from "Components/MouseOverPopover/MouseOverPopover";
 import { formatTime } from "../util/Utils";
-import { API_HOST } from "../util/API";
 import { useConnectorQuery } from "hooks/useConnectorQuery";
 
 const ConnectorHeads = [

@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ClippedDrawer } from '../ClippedDrawer'
 import { ErrorContext } from '../Providers/Error';
-import { getDashboardsFromAPI } from '../../util/API';
 import BasicTable from '../Table';
 import moment from 'moment';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -9,6 +7,7 @@ import Button from '@mui/material/Button';
 import Modal from '../Modal';
 import { Dashboard } from './Dashboard';
 import { Grid } from '@mui/material';
+import {useDashboardQuery} from "../../hooks/useDashboardQuery";
 
 const renderDashboardName = (row) => row.dashboard_name
 
@@ -38,8 +37,6 @@ export function DashboardList() {
 
     const [openModal, setOpenModal] = useState(false)
     const [dashboards, setDashboards] = useState([])
-    const [isLoading, setIsLoading] = useState(true);
-
     const [dashboardInfo, setDashboardInfo] = useState(null);
 
     let errorContext = useContext(ErrorContext);
@@ -75,16 +72,19 @@ export function DashboardList() {
         }
     }
 
+    const {data, isLoading, isError} = useDashboardQuery()
+
     useEffect(() => {
-        if (isLoading) {
-            getDashboardsFromAPI(errorContext).then((resp) => {
-                setDashboards(resp);
-                setIsLoading(false);
-            })
+        if(data) {
+            setDashboards(data)
         }
-    }, [isLoading])
+    }, [data])
 
-
+    useEffect(() => {
+        if(isError) {
+            errorContext.addError()
+        }
+    }, [isError])
 
 
     return (

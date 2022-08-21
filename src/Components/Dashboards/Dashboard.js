@@ -5,7 +5,6 @@ import { Button, Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Paper } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { getConnectorsFromAPI } from '../../util/API'
 import ErrorContext from '../Providers/Error';
 import { APIPost } from '../../util/API';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Backdrop } from '@mui/material';
 import { MetaContext } from '../Providers/MetaProvider';
 import { prettifySnakeCase } from '../../util/Utils'
+import {useConnectorQuery} from "../../hooks/useConnectorQuery";
 
 
 
@@ -33,11 +33,19 @@ export function Dashboard(props) {
 
     let typeConfig = meta.fullMeta.dashboards.type_config;
 
+    const { data, isError } = useConnectorQuery();
+
     useEffect(() => {
-        getConnectorsFromAPI(errorContext).then((resp) => {
-            setConnectors(resp);
-        })
-    }, [])
+        if(data) {
+            setConnectors(data)
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (isError) {
+            errorContext.addError()
+        }
+    }, [isError]);
 
     const handleTabTypeChange = (event, index) => {
         let data = [...tabFormField];
