@@ -8,6 +8,7 @@ export function MetaProvider(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [maximumDashboards, setMaximumDashboards] = useState(null);
   const [fullMeta, setFullMeta] = useState(null);
+  const [maxConnectors, setMaxConnectors] = useState(null);
 
   const error = useContext(ErrorContext);
   const refreshLoginFromServer = () => setIsLoggedIn(null);
@@ -20,6 +21,7 @@ export function MetaProvider(props) {
         setIsLoggedIn(meta.is_authenticated);
         setMaximumDashboards(meta.dashboards.maximum_tabs);
         setFullMeta(meta);
+        setMaxConnectors(meta.user_info.maximum_connectors)
       };
       if (isLoggedIn == null) {
         APICall();
@@ -32,7 +34,8 @@ export function MetaProvider(props) {
         isLoggedIn,
         refreshLoginFromServer,
         maximumDashboards,
-        fullMeta
+        fullMeta,
+        maxConnectors
       }}>
       {props.children}
     </MetaContext.Provider>

@@ -1,4 +1,5 @@
 import { SelectConnector } from "Components/ConnectorFlow/SelectConnector";
+import { LoadingAnimation } from "Components/ConnectorFlow/LoadingAnimation";
 
 import './AddConnector.css'
 import PageLayout from 'Components/PageLayout/PageLayout';
@@ -8,9 +9,8 @@ const AddConnector : React.FC<{showClippedDrawer?: boolean, requireConnectors?: 
   return (
     <>
       <PageLayout showClippedDrawer={showClippedDrawer} requireConnectors={requireConnectors}>
-        <div>
           <SelectConnector/>
-        </div>
+          {/* <LoadingAnimation /> */}
       </PageLayout>
     </>
 

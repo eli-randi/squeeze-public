@@ -6,6 +6,21 @@
   position: relative;
 }
 
+.LimitConnectorPage {
+  background-color: #F0F0F0;
+  padding: 5% 10%;
+  height: 80%;
+  font-family:  'Rubik', 'sans serif';
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.LimitConnectorPage a {
+  text-decoration: none;
+}
+
 .CreateConnectorPortal {
   padding: 0%;
   min-height: 90vh;
