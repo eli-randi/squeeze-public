@@ -1,0 +1,90 @@
+.LoadingDashboardPage {
+  font-family: 'Rubik', 'sans serif';
+}
+
+.LoadingComponents {
+  display: grid;
+  grid-template: 'a' 100%;
+}
+
+
+.loading {
+  grid-area: a;
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.loading.in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+.completed {
+  grid-area: a;
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 2s ease, transform 2s ease;
+}
+
+.completed.in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.LoadingTextBox {
+  width: 50%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.LoadingTextBox h3 {
+  font-size: 1rem;
+  text-decoration: underline;
+  font-weight: bold;
+  color: #0F566C
+}
+
+h2 {
+  color: #0F566C;
+}
+
+.LoadingText {
+  min-height: 50px;
+  animation: textAnimation 4s linear infinite;
+}
+
+@keyframes textAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  30% {
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+
+.TextCompleted {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.TextCompleted.in.visible {
+  opacity: 1;
+  transform: scale(1);
+}

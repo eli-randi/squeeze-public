@@ -1,5 +1,5 @@
 import { SelectConnector } from "Components/ConnectorFlow/SelectConnector";
-import { LoadingAnimation } from "Components/ConnectorFlow/LoadingAnimation";
+import { LoadingDashboardCreation } from "Components/ConnectorFlow/LoadingDashboard";
 
 import './AddConnector.css'
 import PageLayout from 'Components/PageLayout/PageLayout';
