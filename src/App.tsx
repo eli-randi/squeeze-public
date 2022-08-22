@@ -26,7 +26,7 @@ const App = () => {
                 <Route path='/add_dashboard' element={<AddDashboard />} />
                 <Route path='/add_connector' element={<AddConnector />} />
                 <Route path='/' element={<Navigate to='/home' replace />} />
-                <Route path='/new_customer_flow' element={<AddConnector showClippedDrawer={false} requireConnectors={false} />} />
+                <Route path='/new_customer_flow' element={<AddConnector showClippedDrawer={false} requireConnectors={false} shouldCreateDashboard={true}/>} />
               </Routes>
             </RequireAuth>
           </MetaProvider>
