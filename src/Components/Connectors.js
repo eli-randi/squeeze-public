@@ -178,6 +178,7 @@ export function Connectors(props) {
       let id = selectedConnector.id;
       deleteConnectorFromAPI(id, errorContext).then((_) => {
         handleClose();
+        connectorQuery.refetch();
       });
     }
   };
