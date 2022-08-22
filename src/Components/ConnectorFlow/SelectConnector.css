@@ -30,38 +30,6 @@
   margin: 0% 20%; 
 }
 
-.ConnectorTiles {
-  overflow-y: scroll;
-  max-height: 50vh;
-  margin: 2% 15%;
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-
-}
-
-.Tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: white;
-  box-shadow: 6px 4px 6px rgba(0,0,0,0.25);
-  border-radius: 10px;
-  padding: 5%;
-  margin: 5% 5%;
-  aspect-ratio: 1;
-}
-
-.Tile:hover {
-  cursor: pointer;
-}
-
-.Tile img {
-  object-fit: contain;
-  height: 50%;
-  width: auto;
-}
-
 h1 {
   margin-top: 0
 }
@@ -105,20 +73,12 @@ a {
   top: 30px;
 }
 
-.SkipButton {
-  align-self: flex-end;
-  width: 30%
-}
-
-.CredentialChoice {
-  margin: 0% 15%;
-}
 
 .CredentialComponent {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 40vh;
+  margin-bottom: 5%;
 }
 
 .CredentialComponentWidgetOnly {
@@ -126,7 +86,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 20vh;
+  margin-bottom: 5%;
 }
 
 .CredentialComponent p {

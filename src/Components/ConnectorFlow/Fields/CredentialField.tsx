@@ -55,7 +55,6 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
   if (!APIChoices || APIChoices.length === 0) {
     return (
       <div className="CredentialComponentWidgetOnly">
-        <p>Connect your new account:</p>
         {widgets.map((widget) => {
           return <GenericWidget
             extraOnClick={() => setIsPolling(true)}
@@ -70,7 +69,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
     <div className="CredentialComponent">
       <Grid container justifyContent="center">
         <Grid item xs={12}>
-          <p>Connect your existing account:</p>
+          <p>Use your existing account:</p>
           <TextField
             required
             select
@@ -94,6 +93,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
         <Grid item xs={1} alignSelf={"center"}>
         </Grid>
       </Grid>
+      <p style={{textAlign: 'center'}}>Or:</p>
       <div>
         <p>Connect a new account:</p>
         {widgets.map((widget) => {
