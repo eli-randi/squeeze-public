@@ -22,6 +22,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
     const newCredentialsIds = latestCredentialsIds.filter((cred) => !apiChoiceIds.includes(cred));
     const newCredentialsId = newCredentialsIds && newCredentialsIds[0];
     if (newCredentialsId) {
+      setIsPolling(false);
       setField(newCredentialsId);
     }
   };
@@ -33,6 +34,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
       APIGet(url, errorContext).then((resp) => {
         setAPIChoices(resp.data);
         setIsLoading(false);
+        
       });
 
     }
@@ -40,7 +42,7 @@ export const CredentialField: React.FC<{ fieldName: string; setField: (value: st
 
   useEffect(() => {
     if (isPolling) {
-      let interval = setInterval(pollForCredentials, 1000);
+      let interval = setInterval(pollForCredentials, 2000);
       return () => clearInterval(interval);
     }
   }, [isPolling]);

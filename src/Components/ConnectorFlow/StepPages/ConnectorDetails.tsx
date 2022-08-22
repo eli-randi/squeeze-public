@@ -8,7 +8,8 @@ export const ConnectorDetails: React.FC<{
   onSubmit: (event: React.FormEvent) => void;
   onBackClick: () => void;
   connectorTypeLabel: string;
-}> = ({ fieldsToRender, onSubmit, onBackClick, connectorTypeLabel }) => {
+  shouldCreateDashboard: boolean
+}> = ({ fieldsToRender, onSubmit, onBackClick, connectorTypeLabel, shouldCreateDashboard }) => {
   const navigate = useNavigate();
 
   return (
@@ -32,7 +33,7 @@ export const ConnectorDetails: React.FC<{
           sx={{ alignSelf: 'center', width: '50%' }}
           onClick={onSubmit}
         >
-          Create Connector
+          {shouldCreateDashboard ? 'Create Dashboard' : 'Create Connector'}
         </Button>
         <p><a href='mailto:hello@thisissqueeze.com'>Need any help? Contact us!</a></p>
       </div>

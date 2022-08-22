@@ -68,7 +68,7 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
 
 
   const incrementStep = () => {
-    setStep(prevStep => prevStep + 1)
+    setStep(prevStep => prevStep + 1);
   }
 
   const decrementStep = () => {
@@ -163,7 +163,6 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
         APIPost('/reporting/create_dashboard', body, errorContext).then((response) => response.json()).then((resp) => {
           setIsPendingSubmit(false);
           setDashboardUrl(`https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`)
-          // window.location.href = `https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`
         })
       }
     }
@@ -217,7 +216,7 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
         setField={setFieldGenerator('credential_id')}
         formData={formData}
         widgets={widgets}
-        incrementStep={incrementStep}
+        incrementStep={() => setStep(2)}
         decrementStep={decrementStep}
       />
     )
@@ -228,6 +227,7 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
       fieldsToRender={fieldsToRender}
       onSubmit={handleSubmit}
       onBackClick={onBackClick}
+      shouldCreateDashboard={shouldCreateDashboard}
     />
   }
 
