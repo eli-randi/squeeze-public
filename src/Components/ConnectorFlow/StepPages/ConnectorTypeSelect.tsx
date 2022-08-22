@@ -5,6 +5,8 @@ import { getConnectorIcon } from "../../../util/ConnectorIcons";
 import { connectorTypeToDashboardType } from '../SelectConnector';
 import { ConnectorConfig } from '../../../types'
 
+import './ConnectorTypeSelect.css'
+
 export const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void; shouldCreateDashboard: boolean}> = ({ selectConnectorType, shouldCreateDashboard }) => {
   const meta = useContext(MetaContext);
   const [searched, setSearched] = useState('');
@@ -29,6 +31,7 @@ export const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType
   return (
     <div>
       <h1>Choose your platform</h1>
+      <p>Which platform would you like to see in your dashboard?</p>
       <div className="ConnectorSearchBar">
         <CustomizedInputBase
           sx={{ float: 'none', margin: 'auto' }}

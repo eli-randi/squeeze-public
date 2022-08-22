@@ -15,6 +15,7 @@ export const ConnectorDetails: React.FC<{
   return (
     <div className="CreateDashboard">
       <h1>Create your {connectorTypeLabel} connector</h1>
+      <p>We just need some more information to complete your setup. Don't worry, you can always change this later.</p>
       <div className="BackButton">
         <Button
           color="secondary"
