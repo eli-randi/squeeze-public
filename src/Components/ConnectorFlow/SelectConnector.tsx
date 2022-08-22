@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import Lottie from "lottie-react";
 
 import DashboardLottie from '../../assets/DashboardLottie.json';
-import { LoadingAnimation } from "./LoadingAnimation";
+import { LoadingDashboardCreation } from "./LoadingDashboard";
 import Loader from "Components/Loader";
 import CreateConnectorStepper from "Components/ConnectorFlow/CreateConnectorStepper";
 import { ErrorContext } from "Components/Providers/Error";
@@ -53,9 +53,10 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
   const [step, setStep] = useState(0);
   const [connectorType, setConnectorType] = useState<null | string>(null);
   const connectorConfig = useRef<null | any>(null);
-  //test purposes
-  // const useMe = true;
-  const [isPendingSubmit, setIsPendingSubmit] = useState(true);
+  const [isCreatingDashboard, setIsCreatingDashboard] = useState(false);
+  const [isPendingSubmit, setIsPendingSubmit] = useState(false);
+  const [dashboardUrl, setDashboardUrl] = useState<null | string>(null)
+
   const connectorQuery = useConnectorQuery()
 
   useEffect(() => {
@@ -140,8 +141,10 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
 
     APIPost(submitUrl, formData, errorContext).then((response) => response.json()).then((resp) => {
       if (!shouldCreateDashboard) {
+        setIsPendingSubmit(false);
         navigate('/home');
       } else {
+        setIsCreatingDashboard(true);
         const body = {
           data: {
             dashboard_name: `My first ${connectorConfig.current.label} dashboard`,
@@ -159,26 +162,27 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
         }
         APIPost('/reporting/create_dashboard', body, errorContext).then((response) => response.json()).then((resp) => {
           setIsPendingSubmit(false);
-          window.location.href = `https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`
+          setDashboardUrl(`https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`)
+          // window.location.href = `https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`
         })
       }
     }
     );
   }
 
-  //loading state
-  // if(useMe) {
-  //   return (
-  //     <>
-  //     <button onClick={() => setIsPendingSubmit(!isPendingSubmit)}>click</button>
-  //     <LoadingAnimation isLoading = {isPendingSubmit}/>
-  //     </>
-  //   )
-  // }
+  // Create a dashboard loading state
+  if(isCreatingDashboard) {
+    return (
+      <LoadingDashboardCreation 
+            isLoading = {isPendingSubmit}
+            dashboardUrl = {dashboardUrl && dashboardUrl}
+      />
+    )
+  }
 
 
   // Loading State
-  if (connectorQuery.isLoading) {
+  if ((connectorQuery.isLoading) || (!shouldCreateDashboard && isPendingSubmit)) {
     return <Loader />
   }
 
