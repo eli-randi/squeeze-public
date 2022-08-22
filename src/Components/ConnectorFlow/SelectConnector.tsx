@@ -28,7 +28,7 @@ const doesHaveCredentialStep = (config: null | any) => {
   } else return null;
 }
 
-const connectorTypeToDashboardType = {
+export const connectorTypeToDashboardType = {
   google_analytics: 'google_analytics',
   instagram_business: 'instagram',
   google_ads: 'google_ads',
@@ -206,6 +206,7 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
     currentStepComponent = (
       <ConnectorTypeSelect
         selectConnectorType={selectConnectorType}
+        shouldCreateDashboard={shouldCreateDashboard}
       />
     )
   } else if (step === 1) {

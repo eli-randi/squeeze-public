@@ -2,19 +2,25 @@ import { MetaContext } from '../../Providers/MetaProvider';
 import React, { useContext, useState } from "react";
 import CustomizedInputBase from "../../SearchBar";
 import { getConnectorIcon } from "../../../util/ConnectorIcons";
+import { connectorTypeToDashboardType } from '../SelectConnector';
+import { ConnectorConfig } from '../../../types'
 
-export const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void; }> = ({ selectConnectorType }) => {
+export const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType: string) => void; shouldCreateDashboard: boolean}> = ({ selectConnectorType, shouldCreateDashboard }) => {
   const meta = useContext(MetaContext);
   const [searched, setSearched] = useState('');
+  //@ts-ignore
+  let connectorsToRender : ConnectorConfig[] = meta.fullMeta ? meta.fullMeta.connectors : [];
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearched(e.target.value);
   };
-
-  // @ts-ignore
-  let connectorsToRender = meta.fullMeta ? meta.fullMeta.connectors : [];
+  
+  if(shouldCreateDashboard) {
+    connectorsToRender = connectorsToRender.filter((connector) => {
+     return Object.keys(connectorTypeToDashboardType).includes(connector.name)
+    });
+  }
 
   if (searched) {
-    //@ts-ignore
     connectorsToRender = connectorsToRender.filter((connector) => {
       return connector.label.toLowerCase().includes(searched.toLowerCase());
     });
@@ -29,7 +35,6 @@ export const ConnectorTypeSelect: React.FC<{ selectConnectorType: (connectorType
           handleSearchInput={handleSearchInput} />
       </div>
       <div className="ConnectorTiles">
-        {/* @ts-ignore */}
         {connectorsToRender.map((connector) => {
           return (
             <div className="Tile"
