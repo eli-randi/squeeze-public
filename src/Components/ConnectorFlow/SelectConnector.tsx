@@ -11,7 +11,7 @@ import CreateConnectorStepper from "Components/ConnectorFlow/CreateConnectorStep
 import { ErrorContext } from "Components/Providers/Error";
 import { APIPost } from "util/API";
 import { GenericField } from "./Fields/GenericField";
-import {ConnectorConfig, GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget} from "../../types";
+import { ConnectorConfig, GenericConnectorField, GenericConnectorFormData, GenericConnectorWidget } from "../../types";
 import { ConnectorDetails } from "./StepPages/ConnectorDetails";
 import { ConnectorTypeSelect } from "./StepPages/ConnectorTypeSelect";
 import { CredentialsSelect } from "./StepPages/CredentialsSelect";
@@ -28,31 +28,29 @@ const doesHaveCredentialStep = (config: null | any) => {
   } else return null;
 }
 
-const DashboardTypes = {
-  google_analytics: '',
-  instagram_business: '',
-  google_ads: '',
-  linkedin: '',
+const connectorTypeToDashboardType = {
+  google_analytics: 'google_analytics',
+  instagram_business: 'instagram',
+  google_ads: 'google_ads',
+  linkedin: 'linkedin',
   google_sheets: '',
-  twitter_organic: '',
-  tiktok_organic: '',
-  facebook_ads: '',
-  shopify: '',
-  youtube: '',
-  klaviyo: '',
-  s3: '',
-  pinterest: '',
-  outbrain_amplify: '',
-  amplitude: ''
+  twitter_organic: 'twitter_organic',
+  tiktok_organic: 'tiktok_organic',
+  facebook_ads: 'facebook_ads',
+  shopify: 'shopify',
+  youtube: 'youtube',
+  klaviyo: 'klaviyo',
+  pinterest: 'pinterest',
+  outbrain_amplify: 'outbrain_amplify',
 }
 
-const getDashboardTypeFromConnectorType : (connectorType: string) => any = (connectorType) => {
+const getDashboardTypeFromConnectorType: (connectorType: string) => any = (connectorType) => {
   //@ts-ignore
-  return DashboardTypes[connectorType];
+  return connectorTypeToDashboardType[connectorType];
 }
 
 
-export const SelectConnector = () => {
+export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ shouldCreateDashboard }) => {
   const meta: any = useContext(MetaContext);
   const errorContext = useContext(ErrorContext)
   const navigate = useNavigate();
@@ -66,7 +64,7 @@ export const SelectConnector = () => {
   const connectorQuery = useConnectorQuery()
 
   useEffect(() => {
-    if(connectorQuery.isError) {
+    if (connectorQuery.isError) {
       // @ts-ignore
       errorContext.addError()
     }
@@ -85,7 +83,7 @@ export const SelectConnector = () => {
   }
 
   const onBackClick = () => {
-    if(doesHaveCredentialStep(connectorConfig.current)) {
+    if (doesHaveCredentialStep(connectorConfig.current)) {
       const setField = setFieldGenerator('credential_id');
       setField('');
     }
@@ -139,47 +137,38 @@ export const SelectConnector = () => {
     )
   });
 
-  // Submit functionality
-  function handleSubmit(event: React.FormEvent) {
+  // Handle Submit 
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const submitUrl = connectorConfig.current.submit_url;
-    APIPost(submitUrl, formData, errorContext).then(() => navigate('/home'))
-
-  }
-
-  // HANDLE DASHBOARD SUBMIT
-  const handleDashboardSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const submitUrl = connectorConfig.current.submit_url;
-
     setIsPendingSubmit(true);
 
-    APIPost(submitUrl, formData, errorContext).then((resp) => {
-      const body = {
-        data: {
-          dashboard_name: `My first ${connectorConfig.current.label} dashboard`,
-          chart_groups: [
-            {
-              info: {
-                //what response is coming back
-                connector_id: 1,
-                currency: "GBP",
-                conversion_action_types: "",
-              },
-              type: getDashboardTypeFromConnectorType(connectorConfig.current.name) 
-            }
-          ]
+    APIPost(submitUrl, formData, errorContext).then((response) => response.json()).then((resp) => {
+      if (!shouldCreateDashboard) {
+        navigate('/home');
+      } else {
+        const body = {
+          data: {
+            dashboard_name: `My first ${connectorConfig.current.label} dashboard`,
+            chart_groups: [
+              {
+                info: {
+                  connector_id: resp.data.id,
+                  currency: "GBP",
+                  conversion_action_types: "",
+                },
+                type: getDashboardTypeFromConnectorType(connectorConfig.current.name)
+              }
+            ]
+          }
         }
+        APIPost('/reporting/create_dashboard', body, errorContext).then((response) => response.json()).then((resp) => {
+          setIsPendingSubmit(false);
+          window.location.href = `https://dashboards.thisissqueeze.com/login/Squeeze?next=https%3A%2F%2Fdashboards.thisissqueeze.com%2Fsuperset%2Fdashboard%2F${resp.data}%2F`
+        })
       }
-
-      APIPost('/reporting/create_dashboard', body, errorContext).then((resp) => {
-        setIsPendingSubmit(false);
-        //what id data is coming back? do you want to replace window or open new one
-        // window.open(`https://dashboards.thisissqueeze.com/superset/dashboard/${resp.id}`)
-      })
     }
     );
-
   }
 
   //loading state
