@@ -30,14 +30,9 @@ const doesHaveCredentialStep = (config: null | any) => {
 
 export const connectorTypeToDashboardType = {
   google_analytics: 'google_analytics',
-  instagram_business: 'instagram',
   google_ads: 'google_ads',
   linkedin: 'linkedin',
-  google_sheets: '',
   twitter_organic: 'twitter_organic',
-  tiktok_organic: 'tiktok_organic',
-  facebook_ads: 'facebook_ads',
-  shopify: 'shopify',
   youtube: 'youtube',
   klaviyo: 'klaviyo',
   pinterest: 'pinterest',
