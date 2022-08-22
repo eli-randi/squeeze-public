@@ -86,14 +86,15 @@ export const ClippedDrawer = () => {
               </Typography>
             </Grid>
           </Link>
-          <Grid item>
+          <Grid item
+          maxWidth={'100%'}>
             <Typography
-              sx={{ color: "common.white", fontStyle: "italic", fontSize: 12 }}
+              sx={{ color: "common.white", fontStyle: "italic", fontSize: 12, overflowWrap: 'anywhere' }}
             >
-              Signed in as {meta?.fullMeta?.user_info?.email}
+              Signed in as {meta?.fullMeta?.user_info?.email} 
             </Typography>
           </Grid>
-          <Grid item height={"85%"}>
+          <Grid item height={"80%"}>
             <Grid
               container
               direction={"column"}
