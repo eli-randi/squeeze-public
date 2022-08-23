@@ -65,9 +65,9 @@ export const LoadingDashboardCreation: React.FC<{ isLoading: boolean, dashboardU
       </div>
       {isLoading && (
         <div className="LoadingTextBox">
-          <h2>Please wait, your dashboard is being created...</h2>
+          <h2>Please wait, we're getting your dashboard ready...</h2>
           <p className="LoadingText">{loadingText[index]}</p>
-          <h3>Do not refresh whilst this page is loading</h3>
+          <h3 className="FooterText">Do not refresh while this page is loading</h3>
       </div>
       )}
       
@@ -75,8 +75,9 @@ export const LoadingDashboardCreation: React.FC<{ isLoading: boolean, dashboardU
             className={`TextCompleted ${hasTransitionedCompleted && "in"} ${!isLoading && "visible"
               }`}
           >
-            <h2>Your dashboard has been created</h2>
-            <Button onClick={() => dashboardUrl && (window.location.href = dashboardUrl)} variant="contained">Go to dashboard</Button>
+            <h2>Great news!</h2>
+            <p>We've created your dashboard, we just need some time to add the finishing touches. We'll send you an email with a link to your dashboard in the next hour.</p>
+            <p>Any more questions? <a href='mailto:hello@thisissqueeze.com'>Contact us!</a></p>
           </div>
       
     </div>

@@ -182,8 +182,12 @@ export const SelectConnector: React.FC<{ shouldCreateDashboard: boolean }> = ({ 
 
   // Loading State
   if ((connectorQuery.isLoading) || (!shouldCreateDashboard && isPendingSubmit)) {
-    return <Loader />
-  }
+    return (
+      <div style={{height: '100vh'}}>
+        <Loader />
+      </div>
+    
+  )}
 
   // Reached Limit State
   if (connectorQuery.data && connectorQuery.data.length >= meta.maxConnectors) {

@@ -1,9 +1,16 @@
 .LoadingDashboardPage {
   font-family: 'Rubik', 'sans serif';
+  height: 100vh;
+  display: grid;
+  grid-template: 'header' 40%
+                  'body' 40%;
+  justify-content: center;
+  align-items: center;
 }
 
 .LoadingComponents {
   display: grid;
+  grid-area: header;
   grid-template: 'a' 100%;
 }
 
@@ -34,8 +41,8 @@
 }
 
 .LoadingTextBox {
-  width: 50%;
-  height: 60%;
+  width: 60%;
+  grid-area: body;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -49,8 +56,12 @@
   color: #0F566C
 }
 
-h2 {
+.LoadingDashboardPage p, h2 {
   color: #0F566C;
+}
+
+.FooterText {
+  grid-area: footer;
 }
 
 .LoadingText {
@@ -79,12 +90,16 @@ h2 {
 }
 
 .TextCompleted {
+  grid-area: body;
   opacity: 0;
   transform: scale(0.1);
   transition: opacity 1s ease, transform 1s ease;
+  margin: auto;
 }
 
 .TextCompleted.in.visible {
+  margin: auto;
   opacity: 1;
   transform: scale(1);
+  width: 50%;
 }
