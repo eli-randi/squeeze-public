@@ -16,7 +16,6 @@ export const CredentialsSelect: React.FC<{ fieldName: string; setField: (value: 
   return (
     <div className='CredentialChoice'>
       <h1>Link your account</h1>
-      <p>We use your account to automatically sync data and keep your dashboard up to date.</p>
       <div className="BackButton">
         <Button
           color="secondary"
@@ -29,6 +28,7 @@ export const CredentialsSelect: React.FC<{ fieldName: string; setField: (value: 
           Go back
         </Button>
       </div>
+      <p>We use your account to automatically sync data and keep your dashboard up to date.</p>
       <GenericField
         fieldName={fieldName}
         field={field}
