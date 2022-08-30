@@ -2,11 +2,11 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { BasicSpeedDial } from "../SpeedDial";
 import { ClippedDrawer } from "../ClippedDrawer";
-
-import './PageLayout.css'
 import { RequireConnectors } from "Components/Providers/HasConnectors";
 
-const PageLayout: React.FC<PageLayoutProps> = ({ title, speedDial, children, showClippedDrawer = true, requireConnectors=true }) => {
+import './PageLayout.css'
+
+const PageLayout: React.FC<PageLayoutProps> = ({ title, speedDial, children, showClippedDrawer = true, requireConnectors = true }) => {
 
   let components = (
     <>
@@ -16,6 +16,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({ title, speedDial, children, sho
     </>
   )
 
+  if (showClippedDrawer) {
+    components = (
+      <div className="PageLayout">
+        <ClippedDrawer />
+        <div className="Components">
+          {components}
+        </div>
+      </div>
+    )
+  }
+
   if (requireConnectors) {
     components = (
       <RequireConnectors>
@@ -24,19 +35,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ title, speedDial, children, sho
     )
   }
 
-  if (!showClippedDrawer) {
-    return components;
-  }
-
-  return (
-    <div className='PageLayout'>
-      <ClippedDrawer />
-      <div className="Components">
-        {components}
-      </div>
-    </div>
-
-  );
+  return components;
 };
 
 const PageTitle: React.FC<PageTitleProps> = ({ title }) => {

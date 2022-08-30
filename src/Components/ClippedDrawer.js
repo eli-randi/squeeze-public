@@ -104,7 +104,6 @@ export const ClippedDrawer = () => {
               <Grid
                 item
                 width={"100%"}
-                // height={'40%'}
               >
                 <List>
                   <Typography sx={{ color: "common.white" }}>
